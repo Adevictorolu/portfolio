@@ -64,12 +64,29 @@ class _ClientInquirySectionState extends State<ClientInquirySection> {
   }
 
   Future<void> _launchWhatsAppWithFormData() async {
+    final notes = StringBuffer();
+    if (_businessController.text.trim().isNotEmpty) {
+      notes.write('• Brand / Org: ${_businessController.text.trim()}\n');
+    }
+    if (_phoneController.text.trim().isNotEmpty) {
+      notes.write('• Client Phone / WhatsApp: ${_phoneController.text.trim()}\n');
+    }
+    if (_emailController.text.trim().isNotEmpty) {
+      notes.write('• Client Email: ${_emailController.text.trim()}\n');
+    }
+    if (_countryController.text.trim().isNotEmpty) {
+      notes.write('• Location / Country: ${_countryController.text.trim()}\n');
+    }
+    if (_descriptionController.text.trim().isNotEmpty) {
+      notes.write('• Project Brief & Details:\n"${_descriptionController.text.trim()}"');
+    }
+
     final url = PortfolioData.buildWhatsAppUrl(
       clientName: _nameController.text.trim(),
       service: _selectedProjectType,
-      budget: _budgetController.text.trim(),
-      deadline: _deadlineController.text.trim(),
-      notes: '${_descriptionController.text.trim()}\n• Org: ${_businessController.text.trim()}\n• Country: ${_countryController.text.trim()}',
+      budget: _budgetController.text.trim().isNotEmpty ? _budgetController.text.trim() : 'To be discussed',
+      deadline: _deadlineController.text.trim().isNotEmpty ? _deadlineController.text.trim() : 'Standard turnaround',
+      notes: notes.toString().trim(),
     );
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -79,6 +96,7 @@ class _ClientInquirySectionState extends State<ClientInquirySection> {
 
   void _handleSubmit() {
     if (_formKey.currentState!.validate()) {
+      _launchWhatsAppWithFormData();
       setState(() {
         _submitted = true;
       });
@@ -189,7 +207,7 @@ class _ClientInquirySectionState extends State<ClientInquirySection> {
         ),
         const SizedBox(height: 12),
         const Text(
-          'Thank you for your inquiry. Ademola (AVO Media) will review your brief and reply within 12–24 business hours.',
+          'Thank you for your inquiry. AVO Media will review your brief and reply within 12–24 business hours.',
           textAlign: TextAlign.center,
           style: TextStyle(color: AppTheme.textSecondary, fontSize: 14, height: 1.5),
         ),

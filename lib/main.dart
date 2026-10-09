@@ -25,7 +25,7 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '${PortfolioData.designerName} | ${PortfolioData.brandName}',
+      title: '${PortfolioData.brandName} — ${PortfolioData.titleTagline}',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       home: const PortfolioHomePage(),
@@ -280,8 +280,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                         style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16),
                       ),
                       Text(
-                        PortfolioData.designerName,
-                        style: TextStyle(color: AppTheme.goldAccentLight, fontSize: 11),
+                        PortfolioData.titleTagline,
+                        style: TextStyle(color: AppTheme.primaryBlueLight, fontSize: 11, fontWeight: FontWeight.w500),
                       ),
                     ],
                   ),
@@ -334,7 +334,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                   _DrawerItem(
-                    title: 'About Ademola',
+                    title: 'About AVO Media',
                     icon: Icons.person_outline_rounded,
                     onTap: () {
                       Navigator.pop(context);

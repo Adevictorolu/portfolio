@@ -172,7 +172,7 @@ class ProjectDetailModal extends StatelessWidget {
                     Icon(Icons.verified, color: AppTheme.goldAccentLight, size: 14),
                     SizedBox(width: 6),
                     Text(
-                      'Original Design by Ademola Victor Oluokun (AVO Media)',
+                      'Original Design by AVO Media',
                       style: TextStyle(
                         color: AppTheme.textMuted,
                         fontSize: 11,

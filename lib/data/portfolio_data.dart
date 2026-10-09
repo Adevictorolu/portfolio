@@ -4,9 +4,9 @@ import '../models/service_item.dart';
 import '../models/package_item.dart';
 
 class PortfolioData {
-  static const String designerName = 'Ademola Victor Oluokun';
+  static const String designerName = 'AVO Media';
   static const String brandName = 'AVO Media';
-  static const String titleTagline = 'Graphic Designer & Visual Creative';
+  static const String titleTagline = 'Avomedia, Creating beyond limit';
   static const String heroHeadline = 'I Design Visuals That Make Brands Impossible to Ignore.';
   static const String heroSubheadline =
       'Helping businesses, churches, organizations, and creators communicate with authority. '
@@ -32,9 +32,9 @@ class PortfolioData {
     // 1. Featured Branding: AVO Media Identity System
     const ProjectItem(
       id: 'avomedia-brand-identity',
-      title: 'AVO Media Visual Identity & Monogram System',
+      title: 'AVO Media Visual Identity & Wordmark System',
       category: 'Branding',
-      imagePath: 'assets/portfolio/behance/brand_identity_design.jpg',
+      imagePath: 'assets/logo/avomedia_logo.png',
       client: 'AVO Media / Official Brand System',
       year: '2025',
       objective: 'Create a distinctive, modern visual identity and monogram mark that embodies fluid precision, creative mastery, and digital innovation.',
@@ -315,7 +315,7 @@ class PortfolioData {
       title: '420+ Commercial & Church Designs — Annual Creative Retrospective',
       category: 'Branding',
       imagePath: 'assets/portfolio/instagram/ig_personal_5.webp',
-      client: 'Ademola Victor Oluokun / @adevictorolu',
+      client: 'AVO Media / @adevictorolu',
       year: '2025',
       objective: 'Present an authoritative visual retrospective cataloguing more than 420 completed design projects across churches, commercial brands, and events.',
       creativeDirection: 'Expansive multi-row mosaic showing dozens of real flyer layouts, book covers, product ads, and ministry banners with emerald brand footer and verified handles.',
@@ -543,7 +543,7 @@ class PortfolioData {
     String? clientName,
     String? notes,
   }) {
-    final buffer = StringBuffer('Hello Ademola (AVO Media), I would like to discuss a graphic design project.\n\n');
+    final buffer = StringBuffer('Hello AVO Media, I would like to discuss a graphic design project.\n\n');
     if (clientName != null && clientName.isNotEmpty) {
       buffer.write('• My Name: $clientName\n');
     }

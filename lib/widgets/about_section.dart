@@ -56,7 +56,7 @@ class AboutSection extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               const Text(
-                'About Ademola Victor Oluokun',
+                'About AVO Media',
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.w800,
@@ -66,7 +66,7 @@ class AboutSection extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               const Text(
-                'Founder of AVO Media • Graphic Designer & Visual Creative based in Nigeria, serving clients globally.',
+                'Avomedia, Creating beyond limit • Serving clients across Nigeria and worldwide.',
                 style: TextStyle(fontSize: 15, color: AppTheme.textSecondary),
               ),
               const SizedBox(height: 48),
@@ -119,7 +119,7 @@ class AboutSection extends StatelessWidget {
             child: Image.asset(
               'assets/logo/banner_orig.jpg',
               fit: BoxFit.cover,
-              errorBuilder: (_, _, _) => Image.asset('assets/logo/avatar_orig.jpg', fit: BoxFit.cover),
+              errorBuilder: (_, _, _) => Image.asset('assets/logo/avomedia_badge.png', fit: BoxFit.cover),
             ),
           ),
           Padding(
@@ -134,7 +134,7 @@ class AboutSection extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          PortfolioData.designerName,
+                          PortfolioData.brandName,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
@@ -142,9 +142,9 @@ class AboutSection extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          PortfolioData.brandName,
+                          PortfolioData.titleTagline,
                           style: const TextStyle(
-                            color: AppTheme.goldAccentLight,
+                            color: AppTheme.primaryBlueLight,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),

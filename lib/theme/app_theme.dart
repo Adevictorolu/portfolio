@@ -15,10 +15,11 @@ class AppTheme {
   static const Color primaryBlueDark = Color(0xFF1E8CB8);
   static const Color primaryBlueGlow = Color(0x3B31ADE1);
 
-  static const Color goldAccent = Color(0xFFF59E0B);
-  static const Color goldAccentLight = Color(0xFFFBBF24);
-  static const Color goldAccentDark = Color(0xFFD97706);
-  static const Color goldGlow = Color(0x33F59E0B);
+  // Replaced former yellow accents with signature brand blue tones
+  static const Color goldAccent = Color(0xFF31ADE1);
+  static const Color goldAccentLight = Color(0xFF5AC2ED);
+  static const Color goldAccentDark = Color(0xFF1E8CB8);
+  static const Color goldGlow = Color(0x3B31ADE1);
 
   static const Color whatsappGreen = Color(0xFF22C55E);
   static const Color whatsappDark = Color(0xFF15803D);
@@ -33,6 +34,7 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
+      fontFamily: GoogleFonts.montserrat().fontFamily,
       scaffoldBackgroundColor: bgDark,
       primaryColor: primaryBlue,
       colorScheme: const ColorScheme.dark(
@@ -41,54 +43,54 @@ class AppTheme {
         surface: bgSurface,
       ),
       textTheme: TextTheme(
-        displayLarge: GoogleFonts.outfit(
+        displayLarge: GoogleFonts.montserrat(
           fontSize: 48,
           fontWeight: FontWeight.w800,
           color: textPrimary,
           letterSpacing: -1.0,
           height: 1.15,
         ),
-        displayMedium: GoogleFonts.outfit(
+        displayMedium: GoogleFonts.montserrat(
           fontSize: 36,
           fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.5,
           height: 1.2,
         ),
-        headlineLarge: GoogleFonts.outfit(
+        headlineLarge: GoogleFonts.montserrat(
           fontSize: 28,
           fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.3,
         ),
-        headlineMedium: GoogleFonts.outfit(
+        headlineMedium: GoogleFonts.montserrat(
           fontSize: 22,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        titleLarge: GoogleFonts.plusJakartaSans(
+        titleLarge: GoogleFonts.montserrat(
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        titleMedium: GoogleFonts.plusJakartaSans(
+        titleMedium: GoogleFonts.montserrat(
           fontSize: 16,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        bodyLarge: GoogleFonts.plusJakartaSans(
+        bodyLarge: GoogleFonts.montserrat(
           fontSize: 16,
           fontWeight: FontWeight.w400,
           color: textSecondary,
           height: 1.6,
         ),
-        bodyMedium: GoogleFonts.plusJakartaSans(
+        bodyMedium: GoogleFonts.montserrat(
           fontSize: 14,
           fontWeight: FontWeight.w400,
           color: textSecondary,
           height: 1.5,
         ),
-        labelLarge: GoogleFonts.plusJakartaSans(
+        labelLarge: GoogleFonts.montserrat(
           fontSize: 14,
           fontWeight: FontWeight.w600,
           color: textPrimary,

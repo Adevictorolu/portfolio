@@ -301,11 +301,11 @@ class HeroSection extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 16 / 10,
                 child: Image.asset(
-                  'assets/portfolio/instagram/ig_personal_5.webp',
+                  'assets/logo/avomedia_logo.png',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Image.asset(
-                      'assets/portfolio/behance/church_service_flyer.jpg',
+                      'assets/logo/avomedia_badge.png',
                       fit: BoxFit.cover,
                     );
                   },
@@ -330,7 +330,7 @@ class HeroSection extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '420+ Designs Portfolio Showcase — @adevictorolu',
+                              'AVO Media — Official Brand Identity & Logotype',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -340,9 +340,9 @@ class HeroSection extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              'Churches, Commercial Brands, Book Covers & Events',
+                              'Avomedia, Creating beyond limit',
                               style: TextStyle(
-                                color: AppTheme.goldAccentLight,
+                                color: AppTheme.primaryBlueLight,
                                 fontSize: 11,
                               ),
                             ),
@@ -356,7 +356,7 @@ class HeroSection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: const Text(
-                          'Verified Catalog',
+                          'Brand Mark',
                           style: TextStyle(
                             color: AppTheme.primaryBlueLight,
                             fontWeight: FontWeight.w600,

@@ -1,0 +1,37 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "framework": null,
+  "outputDirectory": "build/web",
+  "routes": [
+    {
+      "src": "^/assets/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "^/canvaskit/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "dest": "/canvaskit/$1"
+    },
+    {
+      "src": "^/favicon\\.png$",
+      "dest": "/favicon.png"
+    },
+    {
+      "src": "^/manifest\\.json$",
+      "dest": "/manifest.json"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

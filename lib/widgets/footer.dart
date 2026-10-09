@@ -80,13 +80,18 @@ class Footer extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      '© ${DateTime.now().year} ${PortfolioData.designerName} (${PortfolioData.brandName}). All rights reserved.',
+                      '© ${DateTime.now().year} ${PortfolioData.brandName}. All rights reserved.',
                       style: const TextStyle(color: AppTheme.textMuted, fontSize: 12),
                     ),
                   ),
                   const Text(
-                    'Built with Flutter Web',
-                    style: TextStyle(color: AppTheme.textMuted, fontSize: 12),
+                    'Built by AVOTEK',
+                    style: TextStyle(
+                      color: AppTheme.primaryBlueLight,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.5,
+                    ),
                   ),
                 ],
               ),
@@ -135,8 +140,8 @@ class Footer extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 17),
                 ),
                 Text(
-                  PortfolioData.designerName,
-                  style: TextStyle(color: AppTheme.goldAccentLight, fontSize: 11, fontWeight: FontWeight.w500),
+                  PortfolioData.titleTagline,
+                  style: TextStyle(color: AppTheme.primaryBlueLight, fontSize: 11, fontWeight: FontWeight.w600),
                 ),
               ],
             ),

@@ -1,0 +1,17 @@
+{
+  "name": "avomedia-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AVO Media Graphic Design Portfolio - Ademola Victor Oluokun",
+  "scripts": {
+    "build": "flutter build web --release",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "portfolio",
+    "graphic-designer",
+    "flutter-web",
+    "avomedia"
+  ],
+  "author": "Ademola Victor Oluokun"
+}
