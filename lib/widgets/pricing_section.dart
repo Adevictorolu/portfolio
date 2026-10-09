@@ -165,16 +165,18 @@ class _PricingSectionState extends State<PricingSection> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Row(
+                    Row(
                       children: [
-                        Icon(Icons.tune_rounded, color: AppTheme.goldAccentLight, size: 20),
-                        SizedBox(width: 8),
-                        Text(
-                          'A La Carte Starting Rates (Individual Services)',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
+                        const Icon(Icons.tune_rounded, color: AppTheme.goldAccentLight, size: 20),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'A La Carte Starting Rates (Individual Services)',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
@@ -232,24 +234,26 @@ class _PricingSectionState extends State<PricingSection> {
   Widget _buildRateItem(String label, String range, bool isSmall) {
     return Container(
       width: isSmall ? double.infinity : 280,
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
         color: AppTheme.bgSurface,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: AppTheme.borderSubtle),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
             child: Text(
               label,
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 13, fontWeight: FontWeight.w500),
+              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12, fontWeight: FontWeight.w500),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
+          const SizedBox(width: 8),
           Text(
             range,
-            style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w700),
+            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
           ),
         ],
       ),
@@ -374,20 +378,19 @@ class _PackageCard extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Price display
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
+          Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 6,
             children: [
               Text(
                 formattedPrice,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
-                  fontSize: 28,
+                  fontSize: 26,
                   letterSpacing: -0.5,
                 ),
               ),
-              const SizedBox(width: 4),
               const Text(
                 'starting',
                 style: TextStyle(

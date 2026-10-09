@@ -71,10 +71,13 @@ class ServicesSection extends StatelessWidget {
               LayoutBuilder(
                 builder: (context, constraints) {
                   int crossAxisCount = 1;
+                  double childAspectRatio = 1.15;
                   if (constraints.maxWidth >= 1024) {
                     crossAxisCount = 3;
+                    childAspectRatio = 0.80;
                   } else if (constraints.maxWidth >= 640) {
                     crossAxisCount = 2;
+                    childAspectRatio = 0.74;
                   }
 
                   return GridView.builder(
@@ -84,7 +87,7 @@ class ServicesSection extends StatelessWidget {
                       crossAxisCount: crossAxisCount,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 24,
-                      childAspectRatio: 0.88,
+                      childAspectRatio: childAspectRatio,
                     ),
                     itemCount: PortfolioData.services.length,
                     itemBuilder: (context, index) {
@@ -205,7 +208,7 @@ class _ServiceCardState extends State<_ServiceCard> {
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            const Spacer(),
+            const SizedBox(height: 14),
 
             // Deliverables checklist
             Column(
@@ -236,8 +239,11 @@ class _ServiceCardState extends State<_ServiceCard> {
             const SizedBox(height: 16),
 
             // Starting Rates & CTA
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Wrap(
+              alignment: WrapAlignment.spaceBetween,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              spacing: 8,
+              runSpacing: 8,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -261,6 +267,7 @@ class _ServiceCardState extends State<_ServiceCard> {
                   style: TextButton.styleFrom(
                     foregroundColor: AppTheme.goldAccentLight,
                     textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   ),
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,

@@ -301,11 +301,11 @@ class HeroSection extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 16 / 10,
                 child: Image.asset(
-                  'assets/portfolio/design_6.jpg',
+                  'assets/portfolio/instagram/ig_personal_5.webp',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Image.asset(
-                      'assets/logo/banner_orig.jpg',
+                      'assets/portfolio/behance/church_service_flyer.jpg',
                       fit: BoxFit.cover,
                     );
                   },
@@ -330,7 +330,7 @@ class HeroSection extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Ijebu Boat Cruise 2026 — Dallas, TX',
+                              '420+ Designs Portfolio Showcase — @adevictorolu',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w700,
@@ -340,7 +340,7 @@ class HeroSection extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
-                              'Global Event Branding & Digital Campaign',
+                              'Churches, Commercial Brands, Book Covers & Events',
                               style: TextStyle(
                                 color: AppTheme.goldAccentLight,
                                 fontSize: 11,
@@ -356,7 +356,7 @@ class HeroSection extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: const Text(
-                          'USA / Global',
+                          'Verified Catalog',
                           style: TextStyle(
                             color: AppTheme.primaryBlueLight,
                             fontWeight: FontWeight.w600,
@@ -376,13 +376,13 @@ class HeroSection extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                _buildThumbnail('assets/portfolio/design_1.jpg', 'Branding'),
+                _buildThumbnail('assets/portfolio/behance/brand_identity_design.jpg', 'Branding'),
                 const SizedBox(width: 10),
-                _buildThumbnail('assets/portfolio/design_4.jpg', 'Church Jubilee'),
+                _buildThumbnail('assets/portfolio/behance/church_service_flyer.jpg', 'Church Service'),
                 const SizedBox(width: 10),
-                _buildThumbnail('assets/portfolio/design_3.jpg', 'Celebration'),
+                _buildThumbnail('assets/portfolio/behance/tech_conference_flyer.jpg', 'Tech Summit'),
                 const SizedBox(width: 10),
-                _buildThumbnail('assets/portfolio/design_5.jpg', 'Corporate'),
+                _buildThumbnail('assets/portfolio/behance/book_cover_design.jpg', 'Book Cover'),
               ],
             ),
           ),
