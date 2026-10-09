@@ -3,15 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   // Brand Color Palette derived from Ademola Victor Oluokun / AVO Media
-  static const Color bgDark = Color(0xFF070A11);
-  static const Color bgSurface = Color(0xFF0E1422);
-  static const Color bgCard = Color(0xFF131B2E);
-  static const Color bgElevated = Color(0xFF1B243B);
+  // Primary brand cyan/azure (#31ADE1) and cyan-tinted obsidian dark surfaces
+  static const Color bgDark = Color(0xFF070E17);
+  static const Color bgSurface = Color(0xFF0D1726);
+  static const Color bgCard = Color(0xFF112033);
+  static const Color bgElevated = Color(0xFF172942);
 
-  // Accents
-  static const Color primaryBlue = Color(0xFF2563EB);
-  static const Color primaryBlueLight = Color(0xFF3B82F6);
-  static const Color primaryBlueGlow = Color(0x332563EB);
+  // Accents — Official AVO Media Electric Azure
+  static const Color primaryBlue = Color(0xFF31ADE1);
+  static const Color primaryBlueLight = Color(0xFF5AC2ED);
+  static const Color primaryBlueDark = Color(0xFF1E8CB8);
+  static const Color primaryBlueGlow = Color(0x3B31ADE1);
 
   static const Color goldAccent = Color(0xFFF59E0B);
   static const Color goldAccentLight = Color(0xFFFBBF24);
@@ -25,8 +27,8 @@ class AppTheme {
   static const Color textPrimary = Color(0xFFF8FAFC);
   static const Color textSecondary = Color(0xFF94A3B8);
   static const Color textMuted = Color(0xFF64748B);
-  static const Color borderSubtle = Color(0xFF1E293B);
-  static const Color borderCard = Color(0xFF26354D);
+  static const Color borderSubtle = Color(0xFF1E3350);
+  static const Color borderCard = Color(0xFF264064);
 
   static ThemeData get darkTheme {
     return ThemeData(

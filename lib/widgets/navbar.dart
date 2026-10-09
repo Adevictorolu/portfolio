@@ -54,30 +54,23 @@ class Navbar extends StatelessWidget {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [AppTheme.primaryBlue, AppTheme.goldAccent],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppTheme.primaryBlue.withValues(alpha: 0.5),
+                          width: 1.5,
+                        ),
                         boxShadow: [
                           BoxShadow(
-                            color: AppTheme.goldAccent.withValues(alpha: 0.3),
-                            blurRadius: 10,
+                            color: AppTheme.primaryBlue.withValues(alpha: 0.35),
+                            blurRadius: 12,
                             offset: const Offset(0, 2),
                           ),
                         ],
                       ),
-                      child: const Center(
-                        child: Text(
-                          'AVO',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 16,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
+                      clipBehavior: Clip.antiAlias,
+                      child: Image.asset(
+                        'assets/logo/avomedia_badge.png',
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(width: 14),

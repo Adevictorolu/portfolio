@@ -249,19 +249,26 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
               child: Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [AppTheme.primaryBlue, AppTheme.goldAccent],
-                      ),
                       borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'AVO',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
+                      border: Border.all(
+                        color: AppTheme.primaryBlue.withValues(alpha: 0.5),
+                        width: 1.5,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.primaryBlue.withValues(alpha: 0.3),
+                          blurRadius: 10,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: Image.asset(
+                      'assets/logo/avomedia_badge.png',
+                      fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(width: 12),
