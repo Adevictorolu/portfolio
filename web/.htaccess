@@ -1,0 +1,79 @@
+# ==============================================================================
+# AVO Media — cPanel / Apache Production Web Configuration (.htaccess)
+# Domain: avomedia.com.ng
+# ==============================================================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1. Force HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # 2. Redirect www to non-www (canonical avomedia.com.ng)
+  RewriteCond %{HTTP_HOST} ^www\.avomedia\.com\.ng$ [NC]
+  RewriteRule ^(.*)$ https://avomedia.com.ng/$1 [L,R=301]
+
+  # 3. Flutter Web SPA Routing: If the requested file or directory exists, serve it
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise rewrite everything to index.html for Flutter client-side routing
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ==============================================================================
+# Browser Caching & Performance Headers (Instant Loading)
+# ==============================================================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML & JSON (No cache or short cache to get new Pinterest updates quickly)
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+
+  # WebAssembly & Flutter Engine (Aggressive cache for ultra-fast startup)
+  ExpiresByType application/wasm "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+
+  # Fonts
+  ExpiresByType font/ttf "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+
+  # Images
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+# ==============================================================================
+# Gzip / Brotli Compression
+# ==============================================================================
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/wasm
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Correct MIME Types
+<IfModule mod_mime.c>
+  AddType application/wasm .wasm
+  AddType font/ttf .ttf
+  AddType image/webp .webp
+  AddType application/json .json
+</IfModule>
+
+# Custom Error Document
+ErrorDocument 404 /index.html

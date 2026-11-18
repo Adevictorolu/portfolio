@@ -54,12 +54,34 @@ jobs:
       - name: Run Tests
         run: flutter test
 
+      # Build 1: Root domain build (base-href "/") for custom domains / cPanel (avomedia.com.ng)
+      - name: Build Web Bundle for cPanel / Custom Domain (avomedia.com.ng)
+        run: |
+          flutter build web --release --base-href "/"
+          cp web/.htaccess build/web/.htaccess || true
+          cp web/robots.txt build/web/robots.txt || true
+          cp web/sitemap.xml build/web/sitemap.xml || true
+          mkdir -p cpanel_bundle
+          cp -r build/web/* cpanel_bundle/
+          cp -r build/web/.htaccess cpanel_bundle/.htaccess 2>/dev/null || true
+          cd cpanel_bundle && zip -r ../avomedia_cpanel_bundle.zip . && cd ..
+
+      - name: Upload cPanel ZIP Bundle Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: avomedia_cpanel_bundle
+          path: avomedia_cpanel_bundle.zip
+          retention-days: 30
+
+      # Build 2: Subpath build (base-href "/portfolio/") for GitHub Pages preview
       - name: Build Flutter Web Release for GitHub Pages
         run: |
           flutter build web --release --base-href "/portfolio/"
           cp build/web/index.html build/web/404.html
+          cp web/robots.txt build/web/robots.txt || true
+          cp web/sitemap.xml build/web/sitemap.xml || true
 
-      - name: Upload Build Artifacts
+      - name: Upload GitHub Pages Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
