@@ -237,6 +237,12 @@ class PinterestService {
     }
   }
 
+  String _pinKey(ProjectItem pin) {
+    final hash = _extractImageHash(pin.imagePath);
+    if (hash.isNotEmpty) return hash;
+    return pin.id;
+  }
+
   Future<void> _loadBundledPins() async {
     try {
       final rawJson = await rootBundle.loadString('assets/data/pinterest_pins.json');
@@ -247,7 +253,7 @@ class PinterestService {
           if (item is Map<String, dynamic>) {
             final pin = _normalizePin(ProjectItem.fromJson(item));
             if (pin.imagePath.isNotEmpty) {
-              _pinterestPins[pin.imagePath] = pin;
+              _pinterestPins[_pinKey(pin)] = pin;
             }
           }
         }
@@ -276,7 +282,13 @@ class PinterestService {
           final parsed = parseFeedPayload(response.body);
           if (parsed.isNotEmpty) {
             for (final pin in parsed) {
-              _pinterestPins[pin.imagePath] = pin;
+              final key = _pinKey(pin);
+              final existing = _pinterestPins[key];
+              // Preserve local bundled media asset path if already downloaded
+              if (existing != null && !existing.isNetworkImage) {
+                continue;
+              }
+              _pinterestPins[key] = pin;
             }
             return;
           }
@@ -288,13 +300,14 @@ class PinterestService {
   }
 
   void _rebuildProjectsList() {
-    final existingImages = <String>{};
+    final existingKeys = <String>{};
     final combined = <ProjectItem>[];
 
     // Add live/synced Pinterest pins first so new uploads appear immediately at the top
     int uniquePinCount = 0;
     for (final pin in _pinterestPins.values) {
-      if (existingImages.add(pin.imagePath)) {
+      final key = _pinKey(pin);
+      if (existingKeys.add(key)) {
         combined.add(pin);
         uniquePinCount++;
       }
@@ -303,7 +316,7 @@ class PinterestService {
 
     // Add curated local portfolio works
     for (final project in PortfolioData.projects) {
-      if (existingImages.add(project.imagePath)) {
+      if (existingKeys.add(project.imagePath)) {
         combined.add(project);
       }
     }
@@ -472,6 +485,11 @@ class PinterestService {
       caption = generateSmartCaption(title, cleanedDesc, category, index: index);
     }
 
+    // If this pin's hash is one of our bundled assets, resolve directly to the bundled media file
+    final resolvedImagePath = (imageHash.isNotEmpty && _curatedByHash.containsKey(imageHash))
+        ? 'assets/portfolio/pinterest/$imageHash.jpg'
+        : imageUrl;
+
     final year = _extractYear(pubDate);
     final id = _extractPinId(link, imageUrl, index);
 
@@ -479,7 +497,7 @@ class PinterestService {
       id: 'pinterest-$id',
       title: title,
       category: category,
-      imagePath: imageUrl,
+      imagePath: resolvedImagePath,
       caption: caption,
       client: 'AVO Media • Pinterest',
       year: year,
@@ -596,7 +614,7 @@ class PinterestService {
   }
 
   static String _extractImageHash(String imageUrl) {
-    final match = RegExp(r'\/([a-f0-9]{32})\.\w+$').firstMatch(imageUrl);
+    final match = RegExp(r'([a-f0-9]{32})\.\w+$').firstMatch(imageUrl);
     return match?.group(1) ?? '';
   }
 

@@ -34,12 +34,12 @@ class FeaturedSection extends StatelessWidget {
       width: double.infinity,
       color: AppTheme.bgDark,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 40 : 20,
+        horizontal: isDesktop ? 48 : 24,
         vertical: 56,
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1080),
           child: ValueListenableBuilder<List<ProjectItem>>(
             valueListenable: PinterestService.instance.projectsNotifier,
             builder: (context, projects, _) {
@@ -55,6 +55,7 @@ class FeaturedSection extends StatelessWidget {
                       const Text(
                         'Featured',
                         style: TextStyle(
+                          fontFamily: AppTheme.fontFamily,
                           fontSize: 26,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
@@ -68,6 +69,7 @@ class FeaturedSection extends StatelessWidget {
                         style: TextButton.styleFrom(
                           foregroundColor: AppTheme.primaryBlueLight,
                           textStyle: const TextStyle(
+                            fontFamily: AppTheme.fontFamily,
                             fontWeight: FontWeight.w600,
                             fontSize: 13,
                           ),
@@ -79,9 +81,9 @@ class FeaturedSection extends StatelessWidget {
                   LayoutBuilder(
                     builder: (context, constraints) {
                       int crossAxisCount = 1;
-                      if (constraints.maxWidth >= 960) {
+                      if (constraints.maxWidth >= 900) {
                         crossAxisCount = 3;
-                      } else if (constraints.maxWidth >= 560) {
+                      } else if (constraints.maxWidth >= 540) {
                         crossAxisCount = 2;
                       }
 
@@ -90,9 +92,9 @@ class FeaturedSection extends StatelessWidget {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: crossAxisCount,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20,
-                          childAspectRatio: 0.80,
+                          crossAxisSpacing: 22,
+                          mainAxisSpacing: 22,
+                          childAspectRatio: 0.84,
                         ),
                         itemCount: featuredProjects.length,
                         itemBuilder: (context, index) {
@@ -102,7 +104,7 @@ class FeaturedSection extends StatelessWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                 color: AppTheme.bgCard,
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(16),
                                 border: Border.all(color: AppTheme.borderSubtle),
                               ),
                               clipBehavior: Clip.antiAlias,
@@ -113,31 +115,21 @@ class FeaturedSection extends StatelessWidget {
                                     child: ProjectArtworkImage(project: project),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(14),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          project.title,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 14,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          project.caption,
-                                          style: const TextStyle(
-                                            color: AppTheme.textSecondary,
-                                            fontSize: 12,
-                                          ),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                    child: Text(
+                                      project.title,
+                                      style: const TextStyle(
+                                        fontFamily: AppTheme.fontFamily,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
+                                        letterSpacing: -0.2,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],

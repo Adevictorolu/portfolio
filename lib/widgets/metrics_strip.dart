@@ -14,10 +14,10 @@ class MetricsStrip extends StatelessWidget {
           horizontal: BorderSide(color: AppTheme.borderSubtle, width: 1),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 24),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1080),
           child: const Wrap(
             spacing: 48,
             runSpacing: 16,

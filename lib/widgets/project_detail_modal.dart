@@ -40,12 +40,12 @@ class ProjectDetailModal extends StatelessWidget {
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
       child: Container(
         constraints: BoxConstraints(
-          maxWidth: 960,
+          maxWidth: 920,
           maxHeight: MediaQuery.of(context).size.height * 0.90,
         ),
         decoration: BoxDecoration(
           color: AppTheme.bgSurface,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppTheme.borderCard),
         ),
         child: Column(
@@ -66,12 +66,13 @@ class ProjectDetailModal extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
                           color: AppTheme.bgCard,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: AppTheme.borderSubtle),
                         ),
                         child: Text(
                           project.category,
                           style: const TextStyle(
+                            fontFamily: AppTheme.fontFamily,
                             color: AppTheme.primaryBlueLight,
                             fontWeight: FontWeight.w600,
                             fontSize: 11,
@@ -84,7 +85,7 @@ class ProjectDetailModal extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: AppTheme.pinterestRed.withValues(alpha: 0.14),
-                            borderRadius: BorderRadius.circular(6),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
@@ -94,6 +95,7 @@ class ProjectDetailModal extends StatelessWidget {
                               Text(
                                 'Pinterest',
                                 style: TextStyle(
+                                  fontFamily: AppTheme.fontFamily,
                                   color: Colors.white,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w600,
@@ -119,11 +121,11 @@ class ProjectDetailModal extends StatelessWidget {
                 padding: const EdgeInsets.all(24),
                 child: isDesktop
                     ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Expanded(flex: 11, child: _buildArtwork()),
+                          Expanded(flex: 12, child: _buildArtwork()),
                           const SizedBox(width: 28),
-                          Expanded(flex: 9, child: _buildInfo(context)),
+                          Expanded(flex: 8, child: _buildInfo(context)),
                         ],
                       )
                     : Column(
@@ -144,10 +146,10 @@ class ProjectDetailModal extends StatelessWidget {
 
   Widget _buildArtwork() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(14),
       child: Container(
         color: AppTheme.bgCard,
-        constraints: const BoxConstraints(maxHeight: 520),
+        constraints: const BoxConstraints(maxHeight: 540),
         child: ProjectArtworkImage(
           project: project,
           fit: BoxFit.contain,
@@ -164,54 +166,36 @@ class ProjectDetailModal extends StatelessWidget {
         Text(
           project.title,
           style: const TextStyle(
+            fontFamily: AppTheme.fontFamily,
             color: Colors.white,
-            fontSize: 22,
+            fontSize: 24,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.4,
             height: 1.2,
           ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 8),
         Text(
           '${project.client} • ${project.year}',
           style: const TextStyle(
+            fontFamily: AppTheme.fontFamily,
             color: AppTheme.textMuted,
-            fontSize: 12,
+            fontSize: 13,
             fontWeight: FontWeight.w500,
           ),
         ),
-        const SizedBox(height: 16),
-
-        // Caption
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: AppTheme.bgCard,
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(color: AppTheme.borderSubtle),
-          ),
-          child: Text(
-            project.caption,
-            style: const TextStyle(
-              color: AppTheme.textPrimary,
-              fontSize: 14,
-              height: 1.5,
-            ),
-          ),
-        ),
-        const SizedBox(height: 18),
+        const SizedBox(height: 20),
 
         // Tags
         Wrap(
-          spacing: 6,
-          runSpacing: 6,
+          spacing: 8,
+          runSpacing: 8,
           children: [
             ...project.deliverables.map((d) => _TagPill(label: d)),
             ...project.tools.map((t) => _TagPill(label: t, isAccent: true)),
           ],
         ),
-        const SizedBox(height: 24),
+        const SizedBox(height: 28),
 
         // Actions
         Wrap(
@@ -226,9 +210,13 @@ class ProjectDetailModal extends StatelessWidget {
                 backgroundColor: AppTheme.primaryBlue,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                textStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                textStyle: const TextStyle(
+                  fontFamily: AppTheme.fontFamily,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13,
+                ),
               ),
             ),
             if (project.sourceUrl != null && project.sourceUrl!.isNotEmpty)
@@ -239,9 +227,13 @@ class ProjectDetailModal extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.textPrimary,
                   side: const BorderSide(color: AppTheme.borderCard),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 13),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  textStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  textStyle: const TextStyle(
+                    fontFamily: AppTheme.fontFamily,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
               ),
           ],
@@ -265,7 +257,7 @@ class _TagPill extends StatelessWidget {
         color: isAccent
             ? AppTheme.primaryBlue.withValues(alpha: 0.12)
             : AppTheme.bgElevated,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: isAccent
               ? AppTheme.primaryBlue.withValues(alpha: 0.3)
@@ -275,6 +267,7 @@ class _TagPill extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
+          fontFamily: AppTheme.fontFamily,
           color: isAccent ? AppTheme.primaryBlueLight : AppTheme.textSecondary,
           fontSize: 11,
           fontWeight: FontWeight.w600,

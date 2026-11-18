@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Fetches the latest pins from https://www.pinterest.com/adevictorolu/feed.rss,
+downloads the high-resolution media files into assets/portfolio/pinterest/,
 applies the AVO Media Smart Caption & Categorization Engine, and writes
-assets/data/pinterest_pins.json so every build has the latest Pinterest uploads.
+assets/data/pinterest_pins.json so every build has the latest Pinterest uploads and media.
 """
 
 import html
@@ -17,6 +18,7 @@ PINTEREST_USERNAME = "adevictorolu"
 PINTEREST_URL = f"https://www.pinterest.com/{PINTEREST_USERNAME}/"
 RSS_URL = f"https://www.pinterest.com/{PINTEREST_USERNAME}/feed.rss"
 OUTPUT_JSON = "assets/data/pinterest_pins.json"
+MEDIA_DIR = "assets/portfolio/pinterest"
 
 # Curated visual metadata for known pins on @adevictorolu (keyed by image MD5 hash in URL)
 CURATED_BY_HASH = {
@@ -254,6 +256,35 @@ def extract_pin_id(link: str, index: int) -> str:
     return match.group(1) if match else f"pin-{index}"
 
 
+def download_media_file(image_url: str, img_hash: str, pin_id: str) -> str:
+    os.makedirs(MEDIA_DIR, exist_ok=True)
+    ext_match = re.search(r"\.(jpg|jpeg|png|webp)$", image_url, re.IGNORECASE)
+    ext = ext_match.group(1).lower() if ext_match else "jpg"
+    filename = f"{img_hash or pin_id}.{ext}"
+    local_path = f"{MEDIA_DIR}/{filename}"
+
+    if os.path.exists(local_path) and os.path.getsize(local_path) > 0:
+        return local_path
+
+    try:
+        req = urllib.request.Request(
+            image_url,
+            headers={
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = resp.read()
+        if data:
+            with open(local_path, "wb") as out_f:
+                out_f.write(data)
+            return local_path
+    except Exception as exc:
+        print(f"Warning: could not download media {image_url}: {exc}")
+
+    return image_url
+
+
 def main():
     req = urllib.request.Request(
         RSS_URL,
@@ -284,6 +315,9 @@ def main():
             seen_images.add(image_url)
 
             img_hash = extract_image_hash(image_url)
+            pin_id = extract_pin_id(link, idx)
+            local_or_remote_path = download_media_file(image_url, img_hash, pin_id)
+
             cleaned_title = clean_text(raw_title)
             cleaned_desc = clean_text(raw_desc)
 
@@ -302,14 +336,13 @@ def main():
                 caption = generate_smart_caption(title, cleaned_desc, category, idx)
 
             year = extract_year(pub_date)
-            pin_id = extract_pin_id(link, idx)
 
             pins.append(
                 {
                     "id": f"pinterest-{pin_id}",
                     "title": title,
                     "category": category,
-                    "imagePath": image_url,
+                    "imagePath": local_or_remote_path,
                     "caption": caption,
                     "client": "AVO Media • Pinterest",
                     "year": year,
@@ -320,7 +353,7 @@ def main():
                     "isFromPinterest": True,
                 }
             )
-        print(f"Synced {len(pins)} unique Pinterest pins from {RSS_URL}")
+        print(f"Synced {len(pins)} unique Pinterest pins + media files from {RSS_URL}")
     except Exception as exc:
         print(f"Warning: Could not fetch live RSS ({exc}). Keeping existing {OUTPUT_JSON} if present.")
         if os.path.exists(OUTPUT_JSON):

@@ -27,12 +27,12 @@ class AboutSection extends StatelessWidget {
       width: double.infinity,
       color: AppTheme.bgSurface,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 40 : 20,
+        horizontal: isDesktop ? 48 : 24,
         vertical: 64,
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1080),
           child: isDesktop
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

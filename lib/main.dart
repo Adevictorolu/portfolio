@@ -125,7 +125,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             controller: _scrollController,
             child: Column(
               children: [
-                const SizedBox(height: 72),
+                const SizedBox(height: 88),
 
                 // 1. Minimalist Hero
                 Container(

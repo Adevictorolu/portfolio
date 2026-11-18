@@ -14,31 +14,40 @@ class ProjectArtworkImage extends StatelessWidget {
     this.alignment = Alignment.topCenter,
   });
 
+  /// Wraps remote Pinterest CDN URLs in a CORS-safe image proxy so Flutter Web
+  /// CanvasKit/Skwasm can decode pixels without cross-origin errors.
+  String _corsSafeUrl(String rawUrl) {
+    if (rawUrl.contains('pinimg.com') && !rawUrl.contains('wsrv.nl')) {
+      return 'https://wsrv.nl/?url=${Uri.encodeComponent(rawUrl)}&w=736&output=jpg';
+    }
+    return rawUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (project.isNetworkImage) {
+      final primaryUrl = _corsSafeUrl(project.imagePath);
+      final fallbackProxyUrl =
+          'https://corsproxy.io/?${Uri.encodeComponent(project.imagePath)}';
+
       return Image.network(
-        project.imagePath,
+        primaryUrl,
         fit: fit,
         alignment: alignment,
         width: double.infinity,
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
-          return Container(
-            color: AppTheme.bgElevated,
-            child: const Center(
-              child: SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppTheme.primaryBlueLight,
-                ),
-              ),
-            ),
+          return _buildLoading();
+        },
+        errorBuilder: (_, _, _) {
+          return Image.network(
+            fallbackProxyUrl,
+            fit: fit,
+            alignment: alignment,
+            width: double.infinity,
+            errorBuilder: (_, _, _) => _buildFallback(),
           );
         },
-        errorBuilder: (_, _, _) => _buildFallback(),
       );
     }
 
@@ -48,6 +57,22 @@ class ProjectArtworkImage extends StatelessWidget {
       alignment: alignment,
       width: double.infinity,
       errorBuilder: (_, _, _) => _buildFallback(),
+    );
+  }
+
+  Widget _buildLoading() {
+    return Container(
+      color: AppTheme.bgElevated,
+      child: const Center(
+        child: SizedBox(
+          width: 22,
+          height: 22,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: AppTheme.primaryBlueLight,
+          ),
+        ),
+      ),
     );
   }
 

@@ -68,12 +68,12 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
       width: double.infinity,
       color: AppTheme.bgDark,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 40 : 20,
+        horizontal: isDesktop ? 48 : 24,
         vertical: 64,
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1080),
           child: ValueListenableBuilder<List<ProjectItem>>(
             valueListenable: PinterestService.instance.projectsNotifier,
             builder: (context, allProjects, _) {
@@ -84,7 +84,6 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                 final query = _searchQuery.toLowerCase().trim();
                 final matchesSearch = query.isEmpty ||
                     project.title.toLowerCase().contains(query) ||
-                    project.caption.toLowerCase().contains(query) ||
                     project.category.toLowerCase().contains(query);
                 return matchesCategory && matchesSearch;
               }).toList();
@@ -102,6 +101,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                       const Text(
                         'Selected Works',
                         style: TextStyle(
+                          fontFamily: AppTheme.fontFamily,
                           fontSize: 28,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
@@ -128,6 +128,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                 label: Text(
                                   isSyncing ? 'Syncing...' : 'Sync Pinterest',
                                   style: const TextStyle(
+                                    fontFamily: AppTheme.fontFamily,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -141,7 +142,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                     vertical: 10,
                                   ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                 ),
                               );
@@ -158,6 +159,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                             label: const Text(
                               '@adevictorolu',
                               style: TextStyle(
+                                fontFamily: AppTheme.fontFamily,
                                 color: AppTheme.textSecondary,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
@@ -189,6 +191,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                   backgroundColor: AppTheme.bgCard,
                                   selectedColor: AppTheme.primaryBlue,
                                   labelStyle: TextStyle(
+                                    fontFamily: AppTheme.fontFamily,
                                     color: isSelected
                                         ? Colors.white
                                         : AppTheme.textSecondary,
@@ -203,7 +206,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                         : AppTheme.borderSubtle,
                                   ),
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
                                   showCheckmark: false,
                                 ),
@@ -220,10 +223,15 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                           child: TextField(
                             controller: _searchController,
                             onChanged: (val) => setState(() => _searchQuery = val),
-                            style: const TextStyle(color: Colors.white, fontSize: 13),
+                            style: const TextStyle(
+                              fontFamily: AppTheme.fontFamily,
+                              color: Colors.white,
+                              fontSize: 13,
+                            ),
                             decoration: InputDecoration(
                               hintText: 'Search work...',
                               hintStyle: const TextStyle(
+                                fontFamily: AppTheme.fontFamily,
                                 color: AppTheme.textMuted,
                                 fontSize: 12,
                               ),
@@ -236,15 +244,15 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                               fillColor: AppTheme.bgCard,
                               contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: AppTheme.borderSubtle),
                               ),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: AppTheme.borderSubtle),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(10),
                                 borderSide: const BorderSide(color: AppTheme.primaryBlue),
                               ),
                             ),
@@ -273,6 +281,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                 : 'No matching works found.',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
+                              fontFamily: AppTheme.fontFamily,
                               color: AppTheme.textSecondary,
                               fontSize: 14,
                             ),
@@ -288,7 +297,10 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                             },
                             child: const Text(
                               'Show All Works',
-                              style: TextStyle(color: AppTheme.primaryBlueLight),
+                              style: TextStyle(
+                                fontFamily: AppTheme.fontFamily,
+                                color: AppTheme.primaryBlueLight,
+                              ),
                             ),
                           ),
                         ],
@@ -298,9 +310,9 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                     LayoutBuilder(
                       builder: (context, constraints) {
                         int crossAxisCount = 1;
-                        if (constraints.maxWidth >= 960) {
+                        if (constraints.maxWidth >= 900) {
                           crossAxisCount = 3;
-                        } else if (constraints.maxWidth >= 560) {
+                        } else if (constraints.maxWidth >= 540) {
                           crossAxisCount = 2;
                         }
 
@@ -309,9 +321,9 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: crossAxisCount,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                            childAspectRatio: 0.78,
+                            crossAxisSpacing: 22,
+                            mainAxisSpacing: 22,
+                            childAspectRatio: 0.84,
                           ),
                           itemCount: filteredProjects.length,
                           itemBuilder: (context, index) {
@@ -364,10 +376,10 @@ class _GalleryItemCardState extends State<_GalleryItemCard> {
           duration: const Duration(milliseconds: 180),
           decoration: BoxDecoration(
             color: AppTheme.bgCard,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _hovered
-                  ? AppTheme.primaryBlue.withValues(alpha: 0.5)
+                  ? AppTheme.primaryBlue.withValues(alpha: 0.55)
                   : AppTheme.borderSubtle,
               width: 1,
             ),
@@ -386,12 +398,12 @@ class _GalleryItemCardState extends State<_GalleryItemCard> {
                       left: 10,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
+                          horizontal: 9,
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
                           color: AppTheme.bgDark.withValues(alpha: 0.85),
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -407,6 +419,7 @@ class _GalleryItemCardState extends State<_GalleryItemCard> {
                             Text(
                               p.category,
                               style: const TextStyle(
+                                fontFamily: AppTheme.fontFamily,
                                 color: AppTheme.textPrimary,
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -420,32 +433,21 @@ class _GalleryItemCardState extends State<_GalleryItemCard> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      p.title,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      p.caption,
-                      style: const TextStyle(
-                        color: AppTheme.textSecondary,
-                        fontSize: 12,
-                        height: 1.35,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+                child: Text(
+                  p.title,
+                  style: const TextStyle(
+                    fontFamily: AppTheme.fontFamily,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    letterSpacing: -0.2,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

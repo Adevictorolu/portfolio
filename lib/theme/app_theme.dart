@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
+  static const String fontFamily = 'Figtree';
+
   // Minimalist Obsidian & Azure Palette — AVO Media
   static const Color bgDark = Color(0xFF060A10);
   static const Color bgSurface = Color(0xFF0B111B);
@@ -34,7 +35,7 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       brightness: Brightness.dark,
-      fontFamily: GoogleFonts.figtree().fontFamily,
+      fontFamily: fontFamily,
       scaffoldBackgroundColor: bgDark,
       primaryColor: primaryBlue,
       colorScheme: const ColorScheme.dark(
@@ -42,56 +43,65 @@ class AppTheme {
         secondary: goldAccent,
         surface: bgSurface,
       ),
-      textTheme: TextTheme(
-        displayLarge: GoogleFonts.figtree(
+      textTheme: const TextTheme(
+        displayLarge: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 48,
           fontWeight: FontWeight.w800,
           color: textPrimary,
           letterSpacing: -1.2,
           height: 1.1,
         ),
-        displayMedium: GoogleFonts.figtree(
+        displayMedium: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 36,
           fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.8,
           height: 1.15,
         ),
-        headlineLarge: GoogleFonts.figtree(
+        headlineLarge: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 28,
           fontWeight: FontWeight.w700,
           color: textPrimary,
           letterSpacing: -0.5,
         ),
-        headlineMedium: GoogleFonts.figtree(
+        headlineMedium: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 22,
           fontWeight: FontWeight.w600,
           color: textPrimary,
           letterSpacing: -0.3,
         ),
-        titleLarge: GoogleFonts.figtree(
+        titleLarge: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        titleMedium: GoogleFonts.figtree(
+        titleMedium: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 15,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
-        bodyLarge: GoogleFonts.figtree(
+        bodyLarge: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 16,
           fontWeight: FontWeight.w400,
           color: textSecondary,
           height: 1.5,
         ),
-        bodyMedium: GoogleFonts.figtree(
+        bodyMedium: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           color: textSecondary,
           height: 1.45,
         ),
-        labelLarge: GoogleFonts.figtree(
+        labelLarge: TextStyle(
+          fontFamily: fontFamily,
           fontSize: 13,
           fontWeight: FontWeight.w600,
           color: textPrimary,
