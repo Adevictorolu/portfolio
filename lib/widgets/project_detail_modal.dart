@@ -158,6 +158,7 @@ class ProjectDetailModal extends StatelessWidget {
           project: project,
           fit: BoxFit.contain,
           alignment: Alignment.center,
+          cacheWidth: null,
         ),
       ),
     );

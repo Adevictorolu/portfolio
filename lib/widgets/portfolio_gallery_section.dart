@@ -333,9 +333,11 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                           itemCount: filteredProjects.length,
                           itemBuilder: (context, index) {
                             final project = filteredProjects[index];
-                            return _GalleryItemCard(
-                              project: project,
-                              onTap: () => _openProject(project),
+                            return RepaintBoundary(
+                              child: _GalleryItemCard(
+                                project: project,
+                                onTap: () => _openProject(project),
+                              ),
                             );
                           },
                         );

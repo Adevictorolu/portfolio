@@ -50,11 +50,45 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final GlobalKey _inquiryKey = GlobalKey();
 
   String? _preselectedService;
+  bool _precached = false;
 
   @override
   void initState() {
     super.initState();
     PinterestService.instance.startAutoSync();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_precached) {
+      _precached = true;
+      _precacheInitialMedia();
+    }
+  }
+
+  void _precacheInitialMedia() {
+    const heroAssets = [
+      'assets/logo/avomedia_badge.png',
+      'assets/logo/pinterest_logo.png',
+      'assets/logo/avomedia_logo.png',
+      'assets/portfolio/behance/church_service_flyer.jpg',
+      'assets/portfolio/behance/tech_conference_flyer.jpg',
+      'assets/portfolio/behance/book_cover_design.jpg',
+    ];
+    for (final path in heroAssets) {
+      precacheImage(AssetImage(path), context);
+    }
+
+    final initialProjects = PinterestService.instance.projectsNotifier.value.take(15);
+    for (final project in initialProjects) {
+      if (!project.isNetworkImage) {
+        precacheImage(
+          ResizeImage(AssetImage(project.imagePath), width: 560),
+          context,
+        );
+      }
+    }
   }
 
   void _scrollToSection(String section) {

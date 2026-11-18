@@ -278,6 +278,16 @@ def download_media_file(image_url: str, img_hash: str, pin_id: str) -> str:
         if data:
             with open(local_path, "wb") as out_f:
                 out_f.write(data)
+            try:
+                from PIL import Image
+                img = Image.open(local_path)
+                if max(img.size) > 840:
+                    img.thumbnail((840, 840), Image.Resampling.LANCZOS)
+                if img.mode != "RGB":
+                    img = img.convert("RGB")
+                img.save(local_path, "JPEG", quality=80, optimize=True, progressive=True)
+            except Exception:
+                pass
             return local_path
     except Exception as exc:
         print(f"Warning: could not download media {image_url}: {exc}")
