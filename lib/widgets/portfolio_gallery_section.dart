@@ -91,7 +91,7 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Minimal Header + Pinterest Auto-Track Controls
+                  // Minimal Header + Background Pinterest Auto-Sync Indicator
                   Wrap(
                     spacing: 16,
                     runSpacing: 12,
@@ -118,15 +118,13 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                                 onPressed: isSyncing
                                     ? null
                                     : () => PinterestService.instance.syncNow(),
-                                icon: Icon(
-                                  Icons.sync_rounded,
-                                  size: 15,
-                                  color: isSyncing
-                                      ? AppTheme.textMuted
-                                      : AppTheme.primaryBlueLight,
+                                icon: Image.asset(
+                                  'assets/logo/pinterest_logo.png',
+                                  width: 15,
+                                  height: 15,
                                 ),
                                 label: Text(
-                                  isSyncing ? 'Syncing...' : 'Sync Pinterest',
+                                  isSyncing ? 'Updating...' : 'Background Sync Active',
                                   style: const TextStyle(
                                     fontFamily: AppTheme.fontFamily,
                                     fontSize: 12,
@@ -184,6 +182,13 @@ class _PortfolioGallerySectionState extends State<PortfolioGallerySection> {
                               return Padding(
                                 padding: const EdgeInsets.only(right: 8),
                                 child: ChoiceChip(
+                                  avatar: cat == 'Pinterest'
+                                      ? Image.asset(
+                                          'assets/logo/pinterest_logo.png',
+                                          width: 14,
+                                          height: 14,
+                                        )
+                                      : null,
                                   label: Text(cat),
                                   selected: isSelected,
                                   onSelected: (_) =>
@@ -409,12 +414,12 @@ class _GalleryItemCardState extends State<_GalleryItemCard> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             if (p.isFromPinterest) ...[
-                              const Icon(
-                                Icons.push_pin,
-                                size: 10,
-                                color: AppTheme.pinterestRed,
+                              Image.asset(
+                                'assets/logo/pinterest_logo.png',
+                                width: 12,
+                                height: 12,
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 5),
                             ],
                             Text(
                               p.category,

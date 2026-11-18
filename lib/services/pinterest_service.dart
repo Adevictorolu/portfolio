@@ -211,7 +211,7 @@ class PinterestService {
       _initialized = true;
       syncNow();
     }
-    _autoSyncTimer = Timer.periodic(const Duration(minutes: 2), (_) {
+    _autoSyncTimer = Timer.periodic(const Duration(seconds: 45), (_) {
       syncNow();
     });
   }
@@ -264,11 +264,13 @@ class PinterestService {
   }
 
   Future<void> _fetchLivePinterestFeed() async {
-    final encodedRss = Uri.encodeComponent(rssUrl);
+    final cacheBustRss = '$rssUrl?t=${DateTime.now().millisecondsSinceEpoch}';
+    final encodedRss = Uri.encodeComponent(cacheBustRss);
+    final encodedBaseRss = Uri.encodeComponent(rssUrl);
     final endpoints = <String>[
-      'https://api.rss2json.com/v1/api.json?rss_url=$encodedRss',
       'https://api.allorigins.win/raw?url=$encodedRss',
       'https://corsproxy.io/?$encodedRss',
+      'https://api.rss2json.com/v1/api.json?rss_url=$encodedBaseRss',
       rssUrl,
     ];
 
@@ -502,7 +504,7 @@ class PinterestService {
       client: 'AVO Media • Pinterest',
       year: year,
       deliverables: const ['High-Res Visual', 'Digital & Print'],
-      tools: const ['Photoshop', 'Illustrator'],
+      tools: const ['Photoshop', 'Adobe Lightroom', 'Affinity'],
       isFeatured: index < 3,
       sourceUrl: link.isNotEmpty ? link : profileUrl,
       isFromPinterest: true,

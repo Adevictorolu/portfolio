@@ -347,7 +347,7 @@ def main():
                     "client": "AVO Media • Pinterest",
                     "year": year,
                     "deliverables": ["High-Res Visual", "Digital & Print"],
-                    "tools": ["Photoshop", "Illustrator"],
+                    "tools": ["Photoshop", "Adobe Lightroom", "Affinity"],
                     "isFeatured": len(pins) < 3,
                     "sourceUrl": link,
                     "isFromPinterest": True,

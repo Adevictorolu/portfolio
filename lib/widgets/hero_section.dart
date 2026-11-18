@@ -68,7 +68,7 @@ class HeroSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Live Pinterest Auto-Sync Pill
+        // Live Pinterest Auto-Sync Pill with Official Pinterest Logo
         InkWell(
           onTap: () => PinterestService.instance.syncNow(),
           borderRadius: BorderRadius.circular(24),
@@ -85,20 +85,18 @@ class HeroSection extends StatelessWidget {
                 return Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
-                      width: 7,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: isSyncing ? AppTheme.primaryBlueLight : AppTheme.whatsappGreen,
-                        shape: BoxShape.circle,
-                      ),
+                    Image.asset(
+                      'assets/logo/pinterest_logo.png',
+                      width: 14,
+                      height: 14,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       isSyncing
-                          ? 'Syncing Pinterest @adevictorolu...'
-                          : 'Live Pinterest Feed • @adevictorolu',
+                          ? 'Syncing @adevictorolu in background...'
+                          : 'Auto-Synced with Pinterest • @adevictorolu',
                       style: const TextStyle(
+                        fontFamily: AppTheme.fontFamily,
                         color: AppTheme.textSecondary,
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
@@ -116,6 +114,7 @@ class HeroSection extends StatelessWidget {
         Text(
           PortfolioData.heroHeadline,
           style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                fontFamily: AppTheme.fontFamily,
                 fontSize: isDesktop ? 56 : 36,
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
@@ -131,6 +130,7 @@ class HeroSection extends StatelessWidget {
           child: Text(
             PortfolioData.heroSubheadline,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontFamily: AppTheme.fontFamily,
                   fontSize: isDesktop ? 18 : 15,
                   color: AppTheme.textSecondary,
                   height: 1.45,
@@ -157,7 +157,11 @@ class HeroSection extends StatelessWidget {
               ),
               child: const Text(
                 'View Work',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontFamily,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
               ),
             ),
             OutlinedButton(
@@ -173,13 +177,21 @@ class HeroSection extends StatelessWidget {
               ),
               child: const Text(
                 'Start Project',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontFamily,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
               ),
             ),
             IconButton(
               tooltip: 'Pinterest @adevictorolu',
               onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
-              icon: const Icon(Icons.push_pin_outlined, size: 18, color: AppTheme.textSecondary),
+              icon: Image.asset(
+                'assets/logo/pinterest_logo.png',
+                width: 18,
+                height: 18,
+              ),
               style: IconButton.styleFrom(
                 backgroundColor: AppTheme.bgCard,
                 side: const BorderSide(color: AppTheme.borderSubtle),

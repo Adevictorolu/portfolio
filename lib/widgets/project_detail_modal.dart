@@ -87,12 +87,16 @@ class ProjectDetailModal extends StatelessWidget {
                             color: AppTheme.pinterestRed.withValues(alpha: 0.14),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(Icons.push_pin, size: 11, color: AppTheme.pinterestRed),
-                              SizedBox(width: 4),
-                              Text(
+                              Image.asset(
+                                'assets/logo/pinterest_logo.png',
+                                width: 12,
+                                height: 12,
+                              ),
+                              const SizedBox(width: 5),
+                              const Text(
                                 'Pinterest',
                                 style: TextStyle(
                                   fontFamily: AppTheme.fontFamily,
@@ -222,7 +226,11 @@ class ProjectDetailModal extends StatelessWidget {
             if (project.sourceUrl != null && project.sourceUrl!.isNotEmpty)
               OutlinedButton.icon(
                 onPressed: () => _launchUrl(project.sourceUrl!),
-                icon: const Icon(Icons.open_in_new_rounded, size: 14),
+                icon: Image.asset(
+                  'assets/logo/pinterest_logo.png',
+                  width: 14,
+                  height: 14,
+                ),
                 label: const Text('View on Pinterest'),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppTheme.textPrimary,

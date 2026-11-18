@@ -8,11 +8,11 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 */2 * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,7 +29,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Sync Latest Pinterest Uploads (@adevictorolu)
-        run: python3 scripts/sync_pinterest.py
+        run: |
+          python3 scripts/sync_pinterest.py
+          if [ "${{ github.event_name }}" != "pull_request" ] && [ -n "$(git status --porcelain assets/portfolio/pinterest assets/data/pinterest_pins.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add assets/portfolio/pinterest assets/data/pinterest_pins.json
+            git commit -m "chore: auto-sync new Pinterest uploads (@adevictorolu) [skip ci]"
+            git push origin HEAD:main || true
+          fi
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2

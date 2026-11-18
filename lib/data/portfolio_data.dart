@@ -27,7 +27,17 @@ class PortfolioData {
   static const int satisfactionRate = 100;
   static const int averageTurnaroundHours = 48;
 
-  // Curated Portfolio Projects with concise, high-impact captions
+  // Official AVO Media Design & Editing Stack
+  static const List<String> workStack = [
+    'Photoshop',
+    'Adobe Lightroom',
+    'Canva',
+    'PixelLab',
+    'Photopea',
+    'Affinity',
+  ];
+
+  // Curated Portfolio Projects
   static final List<ProjectItem> projects = [
     const ProjectItem(
       id: 'avomedia-brand-identity',
@@ -37,8 +47,8 @@ class PortfolioData {
       caption: 'Fluid geometric monogram and visual identity engineered for digital and print scale.',
       client: 'AVO Media',
       year: '2025',
-      deliverables: ['Vector Monogram', 'Brand Guidelines', 'Social Suite'],
-      tools: ['Illustrator', 'Photoshop'],
+      deliverables: ['Brand Mark', 'Brand Guidelines', 'Social Suite'],
+      tools: ['Photoshop', 'Affinity'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -50,7 +60,7 @@ class PortfolioData {
       client: 'Apostolic Assembly',
       year: '2025',
       deliverables: ['Print Poster', 'Social Feed 1:1', 'Status Graphic'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -62,7 +72,7 @@ class PortfolioData {
       client: 'AVOTEK Summit',
       year: '2025',
       deliverables: ['Keynote Poster', 'Speaker Cards', 'Stream Overlay'],
-      tools: ['Photoshop', 'Illustrator'],
+      tools: ['Photoshop', 'Affinity'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -70,11 +80,11 @@ class PortfolioData {
       title: 'From Conversion to Maturity',
       category: 'Book Covers',
       imagePath: 'assets/portfolio/behance/book_cover_design.jpg',
-      caption: 'Full-wrap editorial book cover and photorealistic 3D hardcover presentation.',
+      caption: 'Full-wrap editorial book cover and photorealistic hardcover presentation.',
       client: 'Discipleship Publishing',
       year: '2025',
-      deliverables: ['3D Hardcover Mockup', 'Print Wrap', 'E-Book Cover'],
-      tools: ['Photoshop'],
+      deliverables: ['Hardcover Mockup', 'Print Wrap', 'E-Book Cover'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -86,7 +96,7 @@ class PortfolioData {
       client: 'Sword of the Spirit Ministries',
       year: '2024',
       deliverables: ['Jubilee Poster', 'Stage Backdrop', 'Social Banner'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -98,7 +108,7 @@ class PortfolioData {
       client: 'Sports Editorial',
       year: '2025',
       deliverables: ['Editorial Poster', 'Instagram 1:1', 'Mobile Wallpaper'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -110,7 +120,7 @@ class PortfolioData {
       client: "D'mumsys Kitchen",
       year: '2025',
       deliverables: ['Print Menu Flyer', 'Ad Creative', 'WhatsApp Promo'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Canva'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -122,19 +132,19 @@ class PortfolioData {
       client: 'Gospel Broadcast Network',
       year: '2024',
       deliverables: ['Tribute Poster', 'Social Square'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
       isFeatured: true,
     ),
     const ProjectItem(
       id: 'smarter-life-iphone-showcase',
-      title: 'iPhone 15 Pro Max 3D Showcase',
+      title: 'iPhone 15 Pro Max Showcase',
       category: 'Social Media',
       imagePath: 'assets/portfolio/behance/product_showcase_flyer.jpg',
-      caption: 'Sleek 3D product advertisement highlighting flagship hardware and glass depth.',
+      caption: 'Sleek product advertisement highlighting flagship hardware and glass depth.',
       client: 'Tech Retail Campaign',
       year: '2025',
       deliverables: ['E-Commerce Banner', 'Social Ad'],
-      tools: ['Photoshop', 'Blender 3D'],
+      tools: ['Photoshop', 'Photopea'],
       isFeatured: true,
     ),
     const ProjectItem(
@@ -146,7 +156,7 @@ class PortfolioData {
       client: 'Kingdom Impact Broadcast',
       year: '2024',
       deliverables: ['Print Poster', 'Broadcast Slide'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
     ),
     const ProjectItem(
       id: 'agbi-emmanuel-birthday',
@@ -157,7 +167,7 @@ class PortfolioData {
       client: 'Kingdom Creative Network',
       year: '2024',
       deliverables: ['Birthday Poster', 'Social Feed'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
     ),
     const ProjectItem(
       id: 'capacity-tarry-night',
@@ -168,18 +178,18 @@ class PortfolioData {
       client: 'Holy Ghost Encounter',
       year: '2025',
       deliverables: ['Event Flyer', 'Telegram Banner'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'PixelLab'],
     ),
     const ProjectItem(
       id: 'summit-kabusa-couples-meeting',
       title: 'One Flesh — Couples Seminar',
       category: 'Church & Ministry',
       imagePath: 'assets/portfolio/instagram/ig_agency_4.webp',
-      caption: 'Vibrant marriage seminar campaign featuring 3D accents and clear event routing.',
+      caption: 'Vibrant marriage seminar campaign featuring custom accents and clear event routing.',
       client: 'Summit Bible Church',
       year: '2024',
       deliverables: ['Event Poster', 'Social Square'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Canva'],
     ),
     const ProjectItem(
       id: 'transition-to-photoshop',
@@ -190,18 +200,18 @@ class PortfolioData {
       client: 'AVO Media Academy',
       year: '2024',
       deliverables: ['Launch Poster', 'Syllabus Card'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'PixelLab'],
     ),
     const ProjectItem(
       id: 'the-grinding-continues',
       title: 'The Grinding Continues Campaign',
       category: 'Social Media',
       imagePath: 'assets/portfolio/instagram/ig_agency_2.webp',
-      caption: '3D character campaign spotlighting creative consistency and rapid client booking.',
+      caption: 'Character campaign spotlighting creative consistency and rapid client booking.',
       client: 'AVO Media',
       year: '2024',
       deliverables: ['Campaign Graphic', 'Status Promo'],
-      tools: ['Photoshop', 'Blender 3D'],
+      tools: ['Photoshop', 'Affinity'],
     ),
     const ProjectItem(
       id: 'independence-day-nigeria',
@@ -212,7 +222,7 @@ class PortfolioData {
       client: 'AVO Media Series',
       year: '2024',
       deliverables: ['Holiday Poster', 'Social Graphic'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
     ),
     const ProjectItem(
       id: 'welcome-to-may-typography',
@@ -223,7 +233,7 @@ class PortfolioData {
       client: 'AVO Media Series',
       year: '2025',
       deliverables: ['Calendar Artwork', 'Wallpaper'],
-      tools: ['Illustrator', 'Photoshop'],
+      tools: ['Photoshop', 'Affinity'],
     ),
     const ProjectItem(
       id: 'welcome-to-april-grace',
@@ -234,7 +244,7 @@ class PortfolioData {
       client: 'AVO Media Series',
       year: '2025',
       deliverables: ['Monthly Card', 'Story Format'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Photopea'],
     ),
     const ProjectItem(
       id: 'portfolio-420-retrospective',
@@ -245,7 +255,7 @@ class PortfolioData {
       client: 'AVO Media',
       year: '2025',
       deliverables: ['Archive Mosaic', 'Brand Asset'],
-      tools: ['Photoshop', 'Illustrator'],
+      tools: ['Photoshop', 'Canva'],
     ),
     const ProjectItem(
       id: 'nathaniel-bassey-psd-production',
@@ -256,7 +266,7 @@ class PortfolioData {
       client: 'Gospel Music Tribute',
       year: '2024',
       deliverables: ['Master PSD', 'Print Poster'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
     ),
     const ProjectItem(
       id: 'ascension-army-partner-campaign',
@@ -267,7 +277,7 @@ class PortfolioData {
       client: 'Ascension Army',
       year: '2024',
       deliverables: ['Campaign Flyer', 'Screen Slide'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Affinity'],
     ),
     const ProjectItem(
       id: 'sosmi-global-summit',
@@ -278,7 +288,7 @@ class PortfolioData {
       client: 'SOSMI Worldwide',
       year: '2024',
       deliverables: ['Livestream Flyer', 'YouTube Thumbnail'],
-      tools: ['Photoshop'],
+      tools: ['Photoshop', 'Adobe Lightroom'],
     ),
   ];
 
@@ -289,7 +299,7 @@ class PortfolioData {
       title: 'Brand Identity',
       description: 'Logos, color systems, and guidelines built for lasting authority.',
       iconData: Icons.auto_awesome_outlined,
-      deliverables: ['Logo Suite (AI, SVG, PNG)', 'Style Guide', 'Brand Mockups'],
+      deliverables: ['Logo Suite', 'Style Guide', 'Brand Mockups'],
       startingNgn: 100000,
       startingUsd: 300,
       turnaround: '5–10 Days',
@@ -337,9 +347,9 @@ class PortfolioData {
     const ServiceItem(
       id: 'book-editorial',
       title: 'Book Covers',
-      description: 'Print and Kindle covers with 3D presentation mockups.',
+      description: 'Print and Kindle covers with presentation mockups.',
       iconData: Icons.menu_book_outlined,
-      deliverables: ['Full Wrap Cover', 'Kindle E-Book', '3D Book Mockup'],
+      deliverables: ['Full Wrap Cover', 'Kindle E-Book', 'Book Mockup'],
       startingNgn: 25000,
       startingUsd: 75,
       turnaround: '3–5 Days',
@@ -402,7 +412,7 @@ class PortfolioData {
       priceUsd: 550,
       features: [
         'Primary & Secondary Logos',
-        'Vector Source Files (AI, SVG)',
+        'High-Res Source Files',
         'Brand Style Guideline',
         'Stationery & Social Kit',
       ],
@@ -458,4 +468,3 @@ class PortfolioData {
     return 'https://wa.me/$whatsappRaw?text=$encoded';
   }
 }
-

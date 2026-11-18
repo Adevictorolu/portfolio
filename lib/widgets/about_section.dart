@@ -82,6 +82,7 @@ class AboutSection extends StatelessWidget {
         const Text(
           'About AVO Media',
           style: TextStyle(
+            fontFamily: AppTheme.fontFamily,
             color: Colors.white,
             fontSize: 28,
             fontWeight: FontWeight.w800,
@@ -92,6 +93,7 @@ class AboutSection extends StatelessWidget {
         const Text(
           'Led by Ademola Victor Oluokun, AVO Media creates high-impact brand identities, event posters, and ministry campaigns for clients in Nigeria and worldwide.',
           style: TextStyle(
+            fontFamily: AppTheme.fontFamily,
             color: AppTheme.textSecondary,
             fontSize: 15,
             height: 1.55,
@@ -101,12 +103,9 @@ class AboutSection extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: const [
-            _ToolPill(name: 'Photoshop'),
-            _ToolPill(name: 'Illustrator'),
-            _ToolPill(name: 'Blender 3D'),
-            _ToolPill(name: 'Canva Pro'),
-          ],
+          children: PortfolioData.workStack
+              .map((tool) => _ToolPill(name: tool))
+              .toList(),
         ),
         const SizedBox(height: 24),
         Wrap(
@@ -124,13 +123,28 @@ class AboutSection extends StatelessWidget {
               ),
               child: const Text(
                 'Work With Me',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
+                style: TextStyle(
+                  fontFamily: AppTheme.fontFamily,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13,
+                ),
               ),
             ),
             OutlinedButton.icon(
               onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
-              icon: const Icon(Icons.push_pin_outlined, size: 15, color: AppTheme.pinterestRed),
-              label: const Text('Pinterest @adevictorolu'),
+              icon: Image.asset(
+                'assets/logo/pinterest_logo.png',
+                width: 16,
+                height: 16,
+              ),
+              label: const Text(
+                'Pinterest @adevictorolu',
+                style: TextStyle(
+                  fontFamily: AppTheme.fontFamily,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white,
                 side: const BorderSide(color: AppTheme.borderSubtle),
@@ -162,6 +176,7 @@ class _ToolPill extends StatelessWidget {
       child: Text(
         name,
         style: const TextStyle(
+          fontFamily: AppTheme.fontFamily,
           color: AppTheme.textPrimary,
           fontSize: 12,
           fontWeight: FontWeight.w600,

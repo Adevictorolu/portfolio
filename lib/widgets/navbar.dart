@@ -113,10 +113,10 @@ class Navbar extends StatelessWidget {
                           children: [
                             TextButton.icon(
                               onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
-                              icon: const Icon(
-                                Icons.push_pin_outlined,
-                                size: 15,
-                                color: AppTheme.pinterestRed,
+                              icon: Image.asset(
+                                'assets/logo/pinterest_logo.png',
+                                width: 16,
+                                height: 16,
                               ),
                               label: const Text(
                                 'Pinterest',
@@ -174,10 +174,10 @@ class Navbar extends StatelessWidget {
                             IconButton(
                               tooltip: 'Pinterest @adevictorolu',
                               onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
-                              icon: const Icon(
-                                Icons.push_pin_outlined,
-                                color: AppTheme.pinterestRed,
-                                size: 20,
+                              icon: Image.asset(
+                                'assets/logo/pinterest_logo.png',
+                                width: 20,
+                                height: 20,
                               ),
                             ),
                             Builder(
