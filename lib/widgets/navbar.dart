@@ -20,52 +20,38 @@ class Navbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDesktop = MediaQuery.of(context).size.width >= 1024;
+    final isDesktop = MediaQuery.of(context).size.width >= 960;
 
     return Container(
-      height: 80,
+      height: 72,
       decoration: BoxDecoration(
-        color: AppTheme.bgDark.withValues(alpha: 0.92),
+        color: AppTheme.bgDark.withValues(alpha: 0.94),
         border: const Border(
           bottom: BorderSide(color: AppTheme.borderSubtle, width: 1),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.4),
-            blurRadius: 16,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1280),
+          constraints: const BoxConstraints(maxWidth: 1200),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Brand Logo / Monogram
+              // Brand Mark
               InkWell(
                 onTap: () => onNavClick('hero'),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
                 child: Row(
                   children: [
                     Container(
-                      width: 44,
-                      height: 44,
+                      width: 38,
+                      height: 38,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: AppTheme.primaryBlue.withValues(alpha: 0.5),
-                          width: 1.5,
+                          color: AppTheme.primaryBlue.withValues(alpha: 0.4),
+                          width: 1,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppTheme.primaryBlue.withValues(alpha: 0.35),
-                            blurRadius: 12,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: Image.asset(
@@ -73,106 +59,83 @@ class Navbar extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    const SizedBox(width: 14),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          PortfolioData.brandName,
-                          style: TextStyle(
-                            color: AppTheme.textPrimary,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 18,
-                            letterSpacing: 0.2,
-                          ),
-                        ),
-                        Text(
-                          PortfolioData.titleTagline,
-                          style: const TextStyle(
-                            color: AppTheme.primaryBlueLight,
-                            fontSize: 11,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
-                      ],
+                    const SizedBox(width: 12),
+                    const Text(
+                      PortfolioData.brandName,
+                      style: TextStyle(
+                        color: AppTheme.textPrimary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
+                        letterSpacing: -0.3,
+                      ),
                     ),
                   ],
                 ),
               ),
 
-              // Desktop Navigation Menu
               if (isDesktop) ...[
                 Row(
                   children: [
-                    _NavLink(title: 'Featured', onTap: () => onNavClick('featured')),
-                    _NavLink(title: 'Portfolio', onTap: () => onNavClick('portfolio')),
+                    _NavLink(title: 'Work', onTap: () => onNavClick('portfolio')),
                     _NavLink(title: 'Services', onTap: () => onNavClick('services')),
                     _NavLink(title: 'Pricing', onTap: () => onNavClick('pricing')),
-                    _NavLink(title: 'Quote Calculator', onTap: () => onNavClick('quote')),
                     _NavLink(title: 'About', onTap: () => onNavClick('about')),
-                    _NavLink(title: 'Contact', onTap: () => onNavClick('contact')),
+                    _NavLink(title: 'Contact', onTap: () => onNavClick('inquiry')),
                   ],
                 ),
-
-                // Right Action Buttons
                 Row(
                   children: [
-                    // WhatsApp Quick Action
                     TextButton.icon(
-                      onPressed: () => _launchUrl(PortfolioData.buildWhatsAppUrl()),
-                      icon: const Icon(Icons.chat_bubble_outline, size: 16, color: AppTheme.whatsappGreen),
+                      onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
+                      icon: const Icon(Icons.push_pin_outlined, size: 15, color: AppTheme.pinterestRed),
                       label: const Text(
-                        'WhatsApp',
-                        style: TextStyle(color: AppTheme.whatsappGreen, fontWeight: FontWeight.w600, fontSize: 13),
+                        'Pinterest',
+                        style: TextStyle(
+                          color: AppTheme.textPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                       ),
                       style: TextButton.styleFrom(
-                        backgroundColor: AppTheme.whatsappGreen.withValues(alpha: 0.12),
+                        backgroundColor: AppTheme.bgCard,
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: AppTheme.whatsappGreen.withValues(alpha: 0.3)),
+                          side: const BorderSide(color: AppTheme.borderSubtle),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    // Primary CTA
+                    const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () => onNavClick('inquiry'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.primaryBlue,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-                        elevation: 4,
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                       child: const Text(
-                        'Start a Project',
+                        'Start Project',
                         style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
                       ),
                     ),
                   ],
                 ),
               ] else ...[
-                // Mobile / Tablet Hamburger & WhatsApp action
                 Row(
                   children: [
                     IconButton(
-                      tooltip: 'Chat on WhatsApp',
-                      onPressed: () => _launchUrl(PortfolioData.buildWhatsAppUrl()),
-                      icon: const Icon(Icons.chat_bubble_outline, color: AppTheme.whatsappGreen, size: 22),
-                      style: IconButton.styleFrom(
-                        backgroundColor: AppTheme.whatsappGreen.withValues(alpha: 0.12),
-                      ),
+                      tooltip: 'Pinterest @adevictorolu',
+                      onPressed: () => _launchUrl(PortfolioData.pinterestUrl),
+                      icon: const Icon(Icons.push_pin_outlined, color: AppTheme.pinterestRed, size: 20),
                     ),
-                    const SizedBox(width: 8),
                     Builder(
                       builder: (scaffoldContext) {
                         return IconButton(
-                          icon: const Icon(Icons.menu, color: AppTheme.textPrimary, size: 26),
+                          icon: const Icon(Icons.menu_rounded, color: AppTheme.textPrimary, size: 24),
                           onPressed: () {
                             Scaffold.of(scaffoldContext).openEndDrawer();
                           },
@@ -212,11 +175,11 @@ class _NavLinkState extends State<_NavLink> {
       child: GestureDetector(
         onTap: widget.onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
           child: Text(
             widget.title,
             style: TextStyle(
-              color: _isHovered ? AppTheme.goldAccentLight : AppTheme.textSecondary,
+              color: _isHovered ? Colors.white : AppTheme.textSecondary,
               fontSize: 14,
               fontWeight: _isHovered ? FontWeight.w600 : FontWeight.w500,
             ),

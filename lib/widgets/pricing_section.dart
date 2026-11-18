@@ -17,14 +17,13 @@ class PricingSection extends StatefulWidget {
 }
 
 class _PricingSectionState extends State<PricingSection> {
-  bool _isNgn = true; // Currency toggle: true for NGN, false for USD
+  bool _isNgn = true;
 
   Future<void> _launchWhatsApp(String packageName, int price) async {
     final formattedPrice = PortfolioData.formatCurrency(price, _isNgn);
     final url = PortfolioData.buildWhatsAppUrl(
       service: packageName,
       budget: formattedPrice,
-      notes: 'I am interested in ordering the $packageName ($formattedPrice).',
     );
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
@@ -35,95 +34,75 @@ class _PricingSectionState extends State<PricingSection> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final isDesktop = screenWidth >= 1100;
-    final isTablet = screenWidth >= 700;
+    final isDesktop = screenWidth >= 960;
 
     return Container(
       width: double.infinity,
-      color: AppTheme.bgSurface,
+      color: AppTheme.bgDark,
       padding: EdgeInsets.symmetric(
-        horizontal: isDesktop ? 48 : (isTablet ? 32 : 20),
-        vertical: 80,
+        horizontal: isDesktop ? 40 : 20,
+        vertical: 64,
       ),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1280),
+          constraints: const BoxConstraints(maxWidth: 1200),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppTheme.goldAccent.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                child: const Text(
-                  'TRANSPARENT VALUE & INVESTMENT',
-                  style: TextStyle(
-                    color: AppTheme.goldAccentLight,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    letterSpacing: 0.8,
+              // Minimal Header + Currency Switch
+              Wrap(
+                spacing: 16,
+                runSpacing: 12,
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  const Text(
+                    'Pricing',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      letterSpacing: -0.6,
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Commercial Packages & Starting Rates',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.white,
-                  letterSpacing: -0.5,
-                ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Fair, professional pricing tailored for both Nigerian organizations and international clientele.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: AppTheme.textSecondary,
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Currency Toggle Pill Switch
-              Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: AppTheme.bgCard,
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: AppTheme.borderSubtle),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _CurrencyTab(
-                      label: '🇳🇬 Nigerian Naira (NGN ₦)',
-                      isSelected: _isNgn,
-                      onTap: () => setState(() => _isNgn = true),
+                  Container(
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: AppTheme.bgCard,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: AppTheme.borderSubtle),
                     ),
-                    _CurrencyTab(
-                      label: '🌐 International (USD \$)',
-                      isSelected: !_isNgn,
-                      onTap: () => setState(() => _isNgn = false),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _CurrencyTab(
+                          label: 'NGN (₦)',
+                          isSelected: _isNgn,
+                          onTap: () => setState(() => _isNgn = true),
+                        ),
+                        _CurrencyTab(
+                          label: 'USD (\$)',
+                          isSelected: !_isNgn,
+                          onTap: () => setState(() => _isNgn = false),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 28),
 
               // Packages Grid
               LayoutBuilder(
                 builder: (context, constraints) {
                   int crossAxisCount = 1;
-                  if (constraints.maxWidth >= 1024) {
+                  double childAspectRatio = 1.05;
+                  if (constraints.maxWidth >= 960) {
                     crossAxisCount = 4;
-                  } else if (constraints.maxWidth >= 640) {
+                    childAspectRatio = 0.78;
+                  } else if (constraints.maxWidth >= 560) {
                     crossAxisCount = 2;
+                    childAspectRatio = 0.85;
                   }
 
                   return GridView.builder(
@@ -131,9 +110,9 @@ class _PricingSectionState extends State<PricingSection> {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 0.64,
+                      crossAxisSpacing: 18,
+                      mainAxisSpacing: 18,
+                      childAspectRatio: childAspectRatio,
                     ),
                     itemCount: PortfolioData.packages.length,
                     itemBuilder: (context, index) {
@@ -141,8 +120,7 @@ class _PricingSectionState extends State<PricingSection> {
                       return _PackageCard(
                         pkg: pkg,
                         isNgn: _isNgn,
-                        onSelect: () => widget.onSelectPackage(pkg.name),
-                        onWhatsApp: () => _launchWhatsApp(
+                        onSelect: () => _launchWhatsApp(
                           pkg.name,
                           _isNgn ? pkg.priceNgn : pkg.priceUsd,
                         ),
@@ -151,111 +129,9 @@ class _PricingSectionState extends State<PricingSection> {
                   );
                 },
               ),
-              const SizedBox(height: 56),
-
-              // Individual Starting Price Reference Table
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(28),
-                decoration: BoxDecoration(
-                  color: AppTheme.bgCard,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppTheme.borderCard),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.tune_rounded, color: AppTheme.goldAccentLight, size: 20),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'A La Carte Starting Rates (Individual Services)',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final isSmall = constraints.maxWidth < 640;
-                        return Wrap(
-                          spacing: 16,
-                          runSpacing: 12,
-                          children: [
-                            _buildRateItem('Basic / Event Flyer', _isNgn ? '₦15,000 – ₦25,000' : '\$45 – \$75', isSmall),
-                            _buildRateItem('VIP Event Campaign', _isNgn ? '₦30,000 – ₦50,000' : '\$80 – \$140', isSmall),
-                            _buildRateItem('Social Media Design (Single)', _isNgn ? '₦10,000 – ₦18,000' : '\$35 – \$60', isSmall),
-                            _buildRateItem('Church / Ministry Graphic', _isNgn ? '₦15,000 – ₦35,000' : '\$50 – \$100', isSmall),
-                            _buildRateItem('Business Promotional Design', _isNgn ? '₦20,000 – ₦45,000' : '\$60 – \$120', isSmall),
-                            _buildRateItem('Book / Publication Cover', _isNgn ? '₦25,000 – ₦75,000' : '\$75 – \$250', isSmall),
-                            _buildRateItem('Logo Design (Stand-alone)', _isNgn ? '₦40,000 – ₦100,000' : '\$120 – \$300', isSmall),
-                            _buildRateItem('Full Brand Identity System', _isNgn ? '₦200,000 – ₦600,000+' : '\$500 – \$1,800+', isSmall),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppTheme.bgElevated,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Row(
-                        children: [
-                          Icon(Icons.info_outline, size: 16, color: AppTheme.textMuted),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              'Starting reference ranges only. Final investment depends on project scope, complexity, number of concepts, deliverables, and turnaround urgency.',
-                              style: TextStyle(color: AppTheme.textMuted, fontSize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildRateItem(String label, String range, bool isSmall) {
-    return Container(
-      width: isSmall ? double.infinity : 280,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppTheme.bgSurface,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppTheme.borderSubtle),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              label,
-              style: const TextStyle(color: AppTheme.textSecondary, fontSize: 12, fontWeight: FontWeight.w500),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            range,
-            style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w700),
-          ),
-        ],
       ),
     );
   }
@@ -276,19 +152,18 @@ class _CurrencyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
         decoration: BoxDecoration(
           color: isSelected ? AppTheme.primaryBlue : Colors.transparent,
-          borderRadius: BorderRadius.circular(24),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
           label,
           style: TextStyle(
             color: isSelected ? Colors.white : AppTheme.textSecondary,
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-            fontSize: 13,
+            fontSize: 12,
           ),
         ),
       ),
@@ -300,13 +175,11 @@ class _PackageCard extends StatelessWidget {
   final PackageItem pkg;
   final bool isNgn;
   final VoidCallback onSelect;
-  final VoidCallback onWhatsApp;
 
   const _PackageCard({
     required this.pkg,
     required this.isNgn,
     required this.onSelect,
-    required this.onWhatsApp,
   });
 
   @override
@@ -317,115 +190,85 @@ class _PackageCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppTheme.bgCard,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: pkg.isPopular ? AppTheme.goldAccent : AppTheme.borderCard,
-          width: pkg.isPopular ? 1.8 : 1.0,
+          color: pkg.isPopular ? AppTheme.primaryBlue : AppTheme.borderSubtle,
+          width: pkg.isPopular ? 1.5 : 1.0,
         ),
-        boxShadow: [
-          if (pkg.isPopular)
-            BoxShadow(
-              color: AppTheme.goldAccent.withValues(alpha: 0.12),
-              blurRadius: 24,
-              offset: const Offset(0, 6),
-            ),
-        ],
       ),
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Badge
-          if (pkg.badge != null)
-            Container(
-              margin: const EdgeInsets.only(bottom: 12),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: AppTheme.goldAccent.withValues(alpha: 0.15),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(color: AppTheme.goldAccent.withValues(alpha: 0.4)),
-              ),
-              child: Text(
-                pkg.badge!.toUpperCase(),
-                style: const TextStyle(
-                  color: AppTheme.goldAccentLight,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 10,
-                  letterSpacing: 0.6,
-                ),
-              ),
-            )
-          else
-            const SizedBox(height: 25),
-
-          // Name
-          Text(
-            pkg.name,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 18,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            pkg.targetAudience,
-            style: const TextStyle(
-              color: AppTheme.textMuted,
-              fontSize: 12,
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // Price display
-          Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            spacing: 6,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                formattedPrice,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 26,
-                  letterSpacing: -0.5,
+              Expanded(
+                child: Text(
+                  pkg.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              const Text(
-                'starting',
-                style: TextStyle(
-                  color: AppTheme.textMuted,
-                  fontSize: 12,
+              if (pkg.badge != null)
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryBlue.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    pkg.badge!,
+                    style: const TextStyle(
+                      color: AppTheme.primaryBlueLight,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 10,
+                    ),
+                  ),
                 ),
-              ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
+          Text(
+            formattedPrice,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 26,
+              letterSpacing: -0.6,
+            ),
+          ),
+          const SizedBox(height: 6),
           Text(
             pkg.description,
             style: const TextStyle(
               color: AppTheme.textSecondary,
               fontSize: 12,
-              height: 1.4,
+              height: 1.35,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          const Divider(color: AppTheme.borderSubtle, height: 28),
-
-          // Features
+          const Divider(color: AppTheme.borderSubtle, height: 24),
           Expanded(
-            child: ListView(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              children: pkg.features.map((f) {
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: pkg.features.take(4).map((f) {
                 return Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(bottom: 7),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(Icons.check, size: 14, color: AppTheme.primaryBlueLight),
-                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.check_rounded,
+                        size: 14,
+                        color: AppTheme.primaryBlueLight,
+                      ),
+                      const SizedBox(width: 6),
                       Expanded(
                         child: Text(
                           f,
@@ -433,6 +276,8 @@ class _PackageCard extends StatelessWidget {
                             color: AppTheme.textSecondary,
                             fontSize: 12,
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -441,36 +286,21 @@ class _PackageCard extends StatelessWidget {
               }).toList(),
             ),
           ),
-          const SizedBox(height: 12),
-
-          // Action Buttons
           ElevatedButton(
             onPressed: onSelect,
             style: ElevatedButton.styleFrom(
-              backgroundColor: pkg.isPopular ? AppTheme.goldAccent : AppTheme.primaryBlue,
+              backgroundColor:
+                  pkg.isPopular ? AppTheme.primaryBlue : AppTheme.bgElevated,
               foregroundColor: Colors.white,
-              minimumSize: const Size(double.infinity, 42),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              minimumSize: const Size(double.infinity, 40),
               elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
-            child: const Text('Choose Package', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13)),
-          ),
-          const SizedBox(height: 8),
-          OutlinedButton(
-            onPressed: onWhatsApp,
-            style: OutlinedButton.styleFrom(
-              foregroundColor: AppTheme.whatsappGreen,
-              side: BorderSide(color: AppTheme.whatsappGreen.withValues(alpha: 0.3)),
-              minimumSize: const Size(double.infinity, 38),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.chat_bubble_outline, size: 14, color: AppTheme.whatsappGreen),
-                SizedBox(width: 6),
-                Text('Order on WhatsApp', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-              ],
+            child: const Text(
+              'Select',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
             ),
           ),
         ],

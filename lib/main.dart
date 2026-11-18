@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'theme/app_theme.dart';
 import 'data/portfolio_data.dart';
+import 'services/pinterest_service.dart';
 import 'widgets/navbar.dart';
 import 'widgets/hero_section.dart';
 import 'widgets/metrics_strip.dart';
-import 'widgets/featured_section.dart';
 import 'widgets/portfolio_gallery_section.dart';
 import 'widgets/services_section.dart';
 import 'widgets/pricing_section.dart';
-import 'widgets/quote_calculator_section.dart';
 import 'widgets/about_section.dart';
-import 'widgets/process_section.dart';
 import 'widgets/client_inquiry_section.dart';
 import 'widgets/footer.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const PortfolioApp());
 }
 
@@ -43,17 +42,20 @@ class PortfolioHomePage extends StatefulWidget {
 class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final ScrollController _scrollController = ScrollController();
 
-  // Section Keys for smooth scrolling
   final GlobalKey _heroKey = GlobalKey();
-  final GlobalKey _featuredKey = GlobalKey();
   final GlobalKey _portfolioKey = GlobalKey();
   final GlobalKey _servicesKey = GlobalKey();
   final GlobalKey _pricingKey = GlobalKey();
-  final GlobalKey _quoteKey = GlobalKey();
   final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _inquiryKey = GlobalKey();
 
   String? _preselectedService;
+
+  @override
+  void initState() {
+    super.initState();
+    PinterestService.instance.startAutoSync();
+  }
 
   void _scrollToSection(String section) {
     GlobalKey? targetKey;
@@ -62,8 +64,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         targetKey = _heroKey;
         break;
       case 'featured':
-        targetKey = _featuredKey;
-        break;
       case 'portfolio':
         targetKey = _portfolioKey;
         break;
@@ -71,10 +71,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         targetKey = _servicesKey;
         break;
       case 'pricing':
-        targetKey = _pricingKey;
-        break;
       case 'quote':
-        targetKey = _quoteKey;
+        targetKey = _pricingKey;
         break;
       case 'about':
         targetKey = _aboutKey;
@@ -88,8 +86,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     if (targetKey != null && targetKey.currentContext != null) {
       Scrollable.ensureVisible(
         targetKey.currentContext!,
-        duration: const Duration(milliseconds: 700),
-        curve: Curves.easeInOutCubic,
+        duration: const Duration(milliseconds: 550),
+        curve: Curves.easeOutCubic,
       );
     }
   }
@@ -111,6 +109,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   @override
   void dispose() {
+    PinterestService.instance.stopAutoSync();
     _scrollController.dispose();
     super.dispose();
   }
@@ -122,36 +121,25 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       endDrawer: _buildMobileDrawer(),
       body: Stack(
         children: [
-          // Main Scrollable Body
           SingleChildScrollView(
             controller: _scrollController,
             child: Column(
               children: [
-                // 1. Navigation Offset / Top Padding
-                const SizedBox(height: 80),
+                const SizedBox(height: 72),
 
-                // 2. Hero Section
+                // 1. Minimalist Hero
                 Container(
                   key: _heroKey,
                   child: HeroSection(
                     onStartProject: () => _scrollToSection('inquiry'),
-                    onViewWork: () => _scrollToSection('featured'),
+                    onViewWork: () => _scrollToSection('portfolio'),
                   ),
                 ),
 
-                // 3. Metrics Strip
+                // 2. Metrics Strip
                 const MetricsStrip(),
 
-                // 4. Featured Case Studies
-                Container(
-                  key: _featuredKey,
-                  child: FeaturedSection(
-                    onStartProject: () => _scrollToSection('inquiry'),
-                    onViewAllProjects: () => _scrollToSection('portfolio'),
-                  ),
-                ),
-
-                // 5. Complete Portfolio Gallery
+                // 3. Selected Works + Live Pinterest Auto-Sync Gallery
                 Container(
                   key: _portfolioKey,
                   child: PortfolioGallerySection(
@@ -159,7 +147,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ),
 
-                // 6. Professional Services
+                // 4. Services
                 Container(
                   key: _servicesKey,
                   child: ServicesSection(
@@ -167,7 +155,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ),
 
-                // 7. Transparent Pricing & Packages
+                // 5. Pricing
                 Container(
                   key: _pricingKey,
                   child: PricingSection(
@@ -175,15 +163,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ),
 
-                // 8. Custom Quote Estimator
-                Container(
-                  key: _quoteKey,
-                  child: QuoteCalculatorSection(
-                    onRequestFinalQuote: () => _scrollToSection('inquiry'),
-                  ),
-                ),
-
-                // 9. About Designer
+                // 6. About
                 Container(
                   key: _aboutKey,
                   child: AboutSection(
@@ -191,10 +171,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ),
 
-                // 10. Client Workflow Process
-                const ProcessSection(),
-
-                // 11. Client Inquiry Form
+                // 7. Start a Project
                 Container(
                   key: _inquiryKey,
                   child: ClientInquirySection(
@@ -202,7 +179,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ),
 
-                // 12. Footer
+                // 8. Footer
                 Footer(
                   onNavClick: _scrollToSection,
                 ),
@@ -210,7 +187,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             ),
           ),
 
-          // Sticky Top Navbar
+          // Sticky Minimal Navbar
           Positioned(
             top: 0,
             left: 0,
@@ -221,18 +198,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           ),
         ],
       ),
-
-      // Floating WhatsApp Speed Button
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton(
         onPressed: _launchWhatsApp,
+        tooltip: 'WhatsApp',
         backgroundColor: AppTheme.whatsappGreen,
         foregroundColor: Colors.white,
-        icon: const Icon(Icons.chat_bubble_outline_rounded, size: 20),
-        label: const Text(
-          'Chat on WhatsApp',
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 13),
-        ),
-        elevation: 6,
+        elevation: 4,
+        child: const Icon(Icons.chat_bubble_outline_rounded, size: 22),
       ),
     );
   }
@@ -245,64 +217,37 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(24),
+              padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: AppTheme.primaryBlue.withValues(alpha: 0.5),
-                        width: 1.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.primaryBlue.withValues(alpha: 0.3),
-                          blurRadius: 10,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    clipBehavior: Clip.antiAlias,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
                     child: Image.asset(
                       'assets/logo/avomedia_badge.png',
+                      width: 36,
+                      height: 36,
                       fit: BoxFit.cover,
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        PortfolioData.brandName,
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16),
-                      ),
-                      Text(
-                        PortfolioData.titleTagline,
-                        style: TextStyle(color: AppTheme.primaryBlueLight, fontSize: 11, fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  const Text(
+                    PortfolioData.brandName,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 16,
+                    ),
                   ),
                 ],
               ),
             ),
-            const Divider(color: AppTheme.borderSubtle),
+            const Divider(color: AppTheme.borderSubtle, height: 1),
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 children: [
                   _DrawerItem(
-                    title: 'Featured Work',
-                    icon: Icons.star_border_rounded,
-                    onTap: () {
-                      Navigator.pop(context);
-                      _scrollToSection('featured');
-                    },
-                  ),
-                  _DrawerItem(
-                    title: 'Full Portfolio Archive',
+                    title: 'Work',
                     icon: Icons.grid_view_rounded,
                     onTap: () {
                       Navigator.pop(context);
@@ -310,7 +255,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                   _DrawerItem(
-                    title: 'Services & Scope',
+                    title: 'Services',
                     icon: Icons.design_services_outlined,
                     onTap: () {
                       Navigator.pop(context);
@@ -318,7 +263,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                   _DrawerItem(
-                    title: 'Pricing & Packages',
+                    title: 'Pricing',
                     icon: Icons.payments_outlined,
                     onTap: () {
                       Navigator.pop(context);
@@ -326,15 +271,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                   _DrawerItem(
-                    title: 'Quote Calculator',
-                    icon: Icons.calculate_outlined,
-                    onTap: () {
-                      Navigator.pop(context);
-                      _scrollToSection('quote');
-                    },
-                  ),
-                  _DrawerItem(
-                    title: 'About AVO Media',
+                    title: 'About',
                     icon: Icons.person_outline_rounded,
                     onTap: () {
                       Navigator.pop(context);
@@ -342,7 +279,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                   _DrawerItem(
-                    title: 'Contact / Inquiry',
+                    title: 'Contact',
                     icon: Icons.mail_outline_rounded,
                     onTap: () {
                       Navigator.pop(context);
@@ -350,23 +287,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     },
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _scrollToSection('inquiry');
-                },
-                icon: const Icon(Icons.arrow_forward_rounded, size: 16),
-                label: const Text('Start a Project'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppTheme.primaryBlue,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
               ),
             ),
           ],
@@ -390,14 +310,17 @@ class _DrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon, color: AppTheme.primaryBlueLight, size: 20),
+      leading: Icon(icon, color: AppTheme.primaryBlueLight, size: 19),
       title: Text(
         title,
-        style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.w600),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       onTap: onTap,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      hoverColor: AppTheme.bgElevated,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     );
   }
 }

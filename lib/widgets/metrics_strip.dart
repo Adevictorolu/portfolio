@@ -6,9 +6,7 @@ class MetricsStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isDesktop = screenWidth >= 1024;
-    final isTablet = screenWidth >= 640;
+    final isDesktop = MediaQuery.of(context).size.width >= 768;
 
     return Container(
       width: double.infinity,
@@ -18,76 +16,29 @@ class MetricsStrip extends StatelessWidget {
           horizontal: BorderSide(color: AppTheme.borderSubtle, width: 1),
         ),
       ),
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       child: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 1280),
+          constraints: const BoxConstraints(maxWidth: 1200),
           child: isDesktop
               ? const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    _MetricItem(
-                      number: '500+',
-                      label: 'Projects Delivered',
-                      sublabel: 'Across Nigeria, USA, UK & Global',
-                    ),
-                    _VerticalDivider(),
-                    _MetricItem(
-                      number: '100%',
-                      label: 'Client Satisfaction',
-                      sublabel: 'Precision execution & attention to detail',
-                    ),
-                    _VerticalDivider(),
-                    _MetricItem(
-                      number: '24–48h',
-                      label: 'Priority Turnaround',
-                      sublabel: 'Rapid delivery for time-sensitive events',
-                    ),
-                    _VerticalDivider(),
-                    _MetricItem(
-                      number: '8+',
-                      label: 'Design Disciplines',
-                      sublabel: 'Branding, flyers, ministry, corporate, covers',
-                    ),
+                    _MetricItem(number: '500+', label: 'Projects'),
+                    _MetricItem(number: '100%', label: 'Satisfaction'),
+                    _MetricItem(number: '24–48h', label: 'Turnaround'),
+                    _MetricItem(number: 'Live', label: 'Pinterest Sync'),
                   ],
                 )
-              : Wrap(
-                  spacing: 24,
-                  runSpacing: 24,
+              : const Wrap(
+                  spacing: 32,
+                  runSpacing: 20,
                   alignment: WrapAlignment.spaceAround,
                   children: [
-                    SizedBox(
-                      width: isTablet ? screenWidth * 0.42 : screenWidth * 0.85,
-                      child: const _MetricItem(
-                        number: '500+',
-                        label: 'Projects Delivered',
-                        sublabel: 'Across Nigeria, USA, UK & Global',
-                      ),
-                    ),
-                    SizedBox(
-                      width: isTablet ? screenWidth * 0.42 : screenWidth * 0.85,
-                      child: const _MetricItem(
-                        number: '100%',
-                        label: 'Client Satisfaction',
-                        sublabel: 'Precision execution & attention to detail',
-                      ),
-                    ),
-                    SizedBox(
-                      width: isTablet ? screenWidth * 0.42 : screenWidth * 0.85,
-                      child: const _MetricItem(
-                        number: '24–48h',
-                        label: 'Priority Turnaround',
-                        sublabel: 'Rapid delivery for time-sensitive events',
-                      ),
-                    ),
-                    SizedBox(
-                      width: isTablet ? screenWidth * 0.42 : screenWidth * 0.85,
-                      child: const _MetricItem(
-                        number: '8+',
-                        label: 'Design Disciplines',
-                        sublabel: 'Branding, flyers, ministry, corporate, covers',
-                      ),
-                    ),
+                    _MetricItem(number: '500+', label: 'Projects'),
+                    _MetricItem(number: '100%', label: 'Satisfaction'),
+                    _MetricItem(number: '24–48h', label: 'Turnaround'),
+                    _MetricItem(number: 'Live', label: 'Pinterest Sync'),
                   ],
                 ),
         ),
@@ -99,61 +50,38 @@ class MetricsStrip extends StatelessWidget {
 class _MetricItem extends StatelessWidget {
   final String number;
   final String label;
-  final String sublabel;
 
   const _MetricItem({
     required this.number,
     required this.label,
-    required this.sublabel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
           number,
           style: const TextStyle(
-            fontSize: 36,
-            fontWeight: FontWeight.w900,
-            color: AppTheme.goldAccentLight,
+            fontSize: 26,
+            fontWeight: FontWeight.w800,
+            color: Colors.white,
             letterSpacing: -0.5,
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(width: 8),
         Text(
           label,
           style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.textPrimary,
-          ),
-        ),
-        const SizedBox(height: 2),
-        Text(
-          sublabel,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 12,
-            color: AppTheme.textMuted,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: AppTheme.textSecondary,
           ),
         ),
       ],
-    );
-  }
-}
-
-class _VerticalDivider extends StatelessWidget {
-  const _VerticalDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 48,
-      width: 1,
-      color: AppTheme.borderSubtle,
     );
   }
 }
