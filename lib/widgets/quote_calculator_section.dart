@@ -17,9 +17,9 @@ class QuoteCalculatorSection extends StatefulWidget {
 
 class _QuoteCalculatorSectionState extends State<QuoteCalculatorSection> {
   String _projectType = 'Event Flyer';
-  bool _isNigeria = true;
-  int _quantity = 1;
-  String _deadline = 'Standard';
+  final bool _isNigeria = true;
+  final int _quantity = 1;
+  final String _deadline = 'Standard';
 
   final List<String> _projectTypes = [
     'Event Flyer',

@@ -2,37 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Minimalist dark palette — AVO Media
-  static const Color bgDark = Color(0xFF070B12);
-  static const Color bgSurface = Color(0xFF0B111C);
-  static const Color bgCard = Color(0xFF101826);
-  static const Color bgElevated = Color(0xFF162133);
+  // Minimalist Obsidian & Azure Palette — AVO Media
+  static const Color bgDark = Color(0xFF060A10);
+  static const Color bgSurface = Color(0xFF0B111B);
+  static const Color bgCard = Color(0xFF0F1724);
+  static const Color bgElevated = Color(0xFF152033);
 
   // Accents — Official AVO Media Electric Azure
   static const Color primaryBlue = Color(0xFF31ADE1);
   static const Color primaryBlueLight = Color(0xFF5AC2ED);
   static const Color primaryBlueDark = Color(0xFF1E8CB8);
-  static const Color primaryBlueGlow = Color(0x3B31ADE1);
+  static const Color primaryBlueGlow = Color(0x2831ADE1);
 
-  // Signature brand accent aliases
+  // Secondary Accents
   static const Color goldAccent = Color(0xFF31ADE1);
   static const Color goldAccentLight = Color(0xFF5AC2ED);
   static const Color goldAccentDark = Color(0xFF1E8CB8);
-  static const Color goldGlow = Color(0x3B31ADE1);
+  static const Color goldGlow = Color(0x2831ADE1);
 
-  static const Color pinterestRed = Color(0xFFE60023);
   static const Color whatsappGreen = Color(0xFF22C55E);
   static const Color whatsappDark = Color(0xFF15803D);
+  static const Color pinterestRed = Color(0xFFE60023);
 
   // Neutral & Text Colors
   static const Color textPrimary = Color(0xFFF8FAFC);
   static const Color textSecondary = Color(0xFF94A3B8);
   static const Color textMuted = Color(0xFF64748B);
   static const Color borderSubtle = Color(0xFF1A2639);
-  static const Color borderCard = Color(0xFF213047);
+  static const Color borderCard = Color(0xFF21314A);
 
   static ThemeData get darkTheme {
-    final baseTextTheme = GoogleFonts.figtreeTextTheme(ThemeData.dark().textTheme);
     return ThemeData(
       brightness: Brightness.dark,
       fontFamily: GoogleFonts.figtree().fontFamily,
@@ -43,7 +42,7 @@ class AppTheme {
         secondary: goldAccent,
         surface: bgSurface,
       ),
-      textTheme: baseTextTheme.copyWith(
+      textTheme: TextTheme(
         displayLarge: GoogleFonts.figtree(
           fontSize: 48,
           fontWeight: FontWeight.w800,
@@ -52,25 +51,26 @@ class AppTheme {
           height: 1.1,
         ),
         displayMedium: GoogleFonts.figtree(
-          fontSize: 34,
+          fontSize: 36,
           fontWeight: FontWeight.w700,
           color: textPrimary,
-          letterSpacing: -0.6,
+          letterSpacing: -0.8,
           height: 1.15,
         ),
         headlineLarge: GoogleFonts.figtree(
-          fontSize: 26,
+          fontSize: 28,
           fontWeight: FontWeight.w700,
           color: textPrimary,
-          letterSpacing: -0.4,
+          letterSpacing: -0.5,
         ),
         headlineMedium: GoogleFonts.figtree(
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.w600,
           color: textPrimary,
+          letterSpacing: -0.3,
         ),
         titleLarge: GoogleFonts.figtree(
-          fontSize: 17,
+          fontSize: 18,
           fontWeight: FontWeight.w600,
           color: textPrimary,
         ),
@@ -103,10 +103,9 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14),
-          side: const BorderSide(color: borderCard, width: 1),
+          side: const BorderSide(color: borderSubtle, width: 1),
         ),
       ),
     );
   }
 }
-
