@@ -1,5 +1,26 @@
 [
   {
+    "id": "pinterest-1077064067161948687",
+    "title": "A Birthday Design",
+    "category": "Celebrations",
+    "imagePath": "assets/portfolio/pinterest/8bb4639636277c5bf758f3f5ef7adbfc.jpg",
+    "caption": "Bespoke commemorative portrait composition with refined color grading and custom lettering.",
+    "client": "AVO Media • Pinterest",
+    "year": "2026",
+    "deliverables": [
+      "High-Res Visual",
+      "Digital & Print"
+    ],
+    "tools": [
+      "Photoshop",
+      "Adobe Lightroom",
+      "Affinity"
+    ],
+    "isFeatured": true,
+    "sourceUrl": "https://www.pinterest.com/pin/1077064067161948687/",
+    "isFromPinterest": true
+  },
+  {
     "id": "pinterest-1077064067161791072",
     "title": "Oil Resources — Energy & Logistics Banner",
     "category": "Corporate",
@@ -58,7 +79,7 @@
       "Adobe Lightroom",
       "Affinity"
     ],
-    "isFeatured": true,
+    "isFeatured": false,
     "sourceUrl": "https://www.pinterest.com/pin/1077064067161691700/",
     "isFromPinterest": true
   },
